@@ -1,0 +1,30 @@
+{
+  "license": "All rights reserved",
+  "suggestions": {
+  },
+  "dependencies": {
+  },
+  "conflicting": {
+  },
+  "long_description": "= DESCRIPTION:\n\n= REQUIREMENTS:\n\n= ATTRIBUTES:\n\n= USAGE:\n\n",
+  "description": "Installs/Configures ruby_gems",
+  "providing": {
+  },
+  "platforms": {
+  },
+  "version": "0.0.1",
+  "maintainer": "Ryan J. Geyer",
+  "recipes": {
+    "ruby_gems::default": "Just testing for now"
+  },
+  "replacing": {
+  },
+  "maintainer_email": "me@ryangeyer.com",
+  "name": "ruby_gems",
+  "groupings": {
+  },
+  "attributes": {
+  },
+  "recommendations": {
+  }
+}
