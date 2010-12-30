@@ -13,6 +13,8 @@ if node[:platform] == 'windows'
 if (!(cmd /c gem sources --list | findstr 'http://rubygems.org')) {
   cmd /c gem sources --add 'http://rubygems.org'
 }
+
+write-output("Yeah, I did that.. Yo..")
     EOF
   end
 #  powershell "Add http://rubygems.org to gem sources for RightScale sandbox" do
