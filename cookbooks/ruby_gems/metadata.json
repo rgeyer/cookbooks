@@ -15,7 +15,7 @@
   "version": "0.0.1",
   "maintainer": "Ryan J. Geyer",
   "recipes": {
-    "ruby_gems::default": "Just testing for now"
+    "ruby_gems::default": "Adds http://rubygems.org to the gem sources list"
   },
   "replacing": {
   },

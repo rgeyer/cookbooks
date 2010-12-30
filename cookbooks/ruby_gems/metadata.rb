@@ -5,4 +5,9 @@ description      "Installs/Configures ruby_gems"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
 version          "0.0.1"
 
-recipe "ruby_gems::default","Just testing for now"
+# I'm hesitant to actually include depends statements here, since the dependencies will differ based on the platform
+# and which RepoPath this repo/cookbook is a part of
+# depends "rubygems"
+# depends "rs_sandbox"
+
+recipe "ruby_gems::default","Adds http://rubygems.org to the gem sources list"
