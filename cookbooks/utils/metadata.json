@@ -1,0 +1,72 @@
+{
+  "license": "All rights reserved",
+  "suggestions": {
+  },
+  "dependencies": {
+    "ruby_gems": [
+
+    ]
+  },
+  "conflicting": {
+  },
+  "long_description": "= DESCRIPTION:\n\n= REQUIREMENTS:\n\n= ATTRIBUTES:\n\n= USAGE:\n\n",
+  "description": "Installs/Configures utils",
+  "providing": {
+  },
+  "platforms": {
+  },
+  "version": "0.0.1",
+  "maintainer": "Ryan J. Geyer",
+  "recipes": {
+    "utils::install_rest_connection_gem": "Installs version 0.0.15 of the rest_connection gem on either Windows or *nix"
+  },
+  "replacing": {
+  },
+  "maintainer_email": "me@ryangeyer.com",
+  "name": "utils",
+  "groupings": {
+  },
+  "attributes": {
+    "utils/rest_user": {
+      "required": "required",
+      "calculated": false,
+      "choice": [
+
+      ],
+      "type": "string",
+      "recipes": [
+        "utils::install_rest_connection_gem"
+      ],
+      "display_name": "REST API Username",
+      "description": "The email address used to log into the RightScale dashboard, and the REST API"
+    },
+    "utils/rest_pass": {
+      "required": "required",
+      "calculated": false,
+      "choice": [
+
+      ],
+      "type": "string",
+      "recipes": [
+        "utils::install_rest_connection_gem"
+      ],
+      "display_name": "REST API Password",
+      "description": "The password used to log into the RightScale dashboard, and the REST API"
+    },
+    "utils/rest_acct_num": {
+      "required": "required",
+      "calculated": false,
+      "choice": [
+
+      ],
+      "type": "string",
+      "recipes": [
+        "utils::install_rest_connection_gem"
+      ],
+      "display_name": "RightScale Account Number",
+      "description": "Your RightScale account number"
+    }
+  },
+  "recommendations": {
+  }
+}
