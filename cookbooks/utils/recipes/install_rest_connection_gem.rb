@@ -18,6 +18,8 @@ else
     version rest_connection_version
     action :install
   end
+
+  gem_package "i18n"
 end
 
 directory value_for_platform("windows" => {"default" => "C:/Users/RightScale_1/.rest_connection"}, "default" => "/etc/rest_connection") do
