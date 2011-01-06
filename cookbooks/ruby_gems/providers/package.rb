@@ -1,5 +1,5 @@
 action :install do
-  install_command = "install --both --no-rdoc --no-force --no-test -y"
+  install_command = "install --both --no-rdoc --no-force --no-test --no-ri --ignore-dependencies"
   install_command += " --version '#{new_resource.version}'" if new_resource.version
   install_command += " #{new_resource.name}"
   if node[:platform] == "windows"
