@@ -12,7 +12,7 @@ cmd /c gem #{install_command}
       EOF
     end
   else
-    # Installs for the actual server environment
+    # Installs for the servers system environment
     gem_package new_resource.name do
       if new_resource.version
         version new_resource.version
@@ -21,11 +21,14 @@ cmd /c gem #{install_command}
     end
 
     # Installs for the RightScale sandbox
-    bash "Installing #{new_resource.name} ruby gem in RightScale sandbox" do
-      code <<-EOF
-/opt/rightscale/sandbox/bin/gem #{install_command}
-      EOF
-      not_if "/opt/rightscale/sandbox/bin/gem list | grep #{new_resource.name}"
+    gem_package new_resource.name do
+      if new_resource.version
+        version new_resource.version
+      end
+      gem_binary "/opt/rightscale/sandbox/bin/gem"
+      action :install
     end
   end
+
+  Gem.clear_paths
 end
