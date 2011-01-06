@@ -4,22 +4,13 @@ require 'socket'
 
 include_recipe "ruby_gems::default"
 
-# NOTE: For Windows, this installs the rest_connection config yaml file only for the RightScale_1 user, so if you try
-# to use it for other stuff like, say a scheduled windows task that runs as administrator, you'd be hosed.
-if node[:platform] == "windows"
-  rs_sandbox_exec "Install rest_connection gem" do
-    code <<-EOF
-cmd /c gem install --version '#{rest_connection_version}' rest_connection
-cmd /c gem install i18n
-    EOF
-  end
-else
-  gem_package "rest_connection" do
-    version rest_connection_version
-    action :install
-  end
+ruby_gems_package "rest_connection" do
+  version rest_connection_version
+  action :install
+end
 
-  gem_package "i18n"
+ruby_gems_package "i18n" do
+  action :install
 end
 
 directory value_for_platform("windows" => {"default" => "C:/Users/RightScale_1/.rest_connection"}, "default" => "/etc/rest_connection") do

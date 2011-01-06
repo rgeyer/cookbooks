@@ -17,4 +17,11 @@ if (!(cmd /c gem sources --list | findstr 'http://rubygems.org')) {
   end
 else
   include_recipe "rubygems::default"
+
+  bash "Add http://rubygems.org to gem sources for RightScale sandbox" do
+    code <<-EOF
+/opt/rightscale/sandbox/bin/gem sources --add 'http://rubygems.org'
+    EOF
+    not_if "/opt/rightscale/sandbox/bin/gem sources --list | grep http://rubygems.org"
+  end
 end
