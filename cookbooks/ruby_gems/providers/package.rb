@@ -1,6 +1,7 @@
 action :install do
   install_command = "install --both --no-rdoc --no-force --no-test --no-ri --ignore-dependencies"
   install_command += " --version '#{new_resource.version}'" if new_resource.version
+  install_command += " --source '#{new_resource.source}'" if new_resource.source
   install_command += " #{new_resource.name}"
   if node[:platform] == "windows"
     # NOTE: For Windows, this installs the rest_connection config yaml file only for the RightScale_1 user, so if you try
@@ -17,6 +18,9 @@ cmd /c gem #{install_command}
       if new_resource.version
         version new_resource.version
       end
+      if new_resource.source
+        source new_resource.source
+      end
       action :install
     end
 
@@ -24,6 +28,9 @@ cmd /c gem #{install_command}
     gem_package new_resource.name do
       if new_resource.version
         version new_resource.version
+      end
+      if new_resource.source
+        source new_resource.source
       end
       gem_binary "/opt/rightscale/sandbox/bin/gem"
       action :install

@@ -10,6 +10,8 @@ version          "0.0.1"
 # depends "rubygems"
 # depends "rs_sandbox"
 
+depends "rubygems"
+
 provides "ruby_gems[package]"
 
 recipe "ruby_gems::default","Adds http://rubygems.org to the gem sources list"
