@@ -1,15 +1,10 @@
-#include RGeyer::Aws::S3
-
-def load_aws_gem()
-  begin
-    require 'aws/s3'
-  rescue LoadError
-    Chef::Log.warn("Missing gem 'aws/s3', make sure to run aws::default")
-  end
+begin
+  require 'aws/s3'
+rescue LoadError
+  Chef::Log.warn("Missing gem 'aws/s3', make sure to run aws::default")
 end
 
 action :get do
-  load_aws_gem()
   # TODO: This would be great to do in some sort of "constructor" or elsewhere since we'll have to
   # do it for all actions
   AWS::S3::Base.establish_connection!(
@@ -37,7 +32,6 @@ action :get do
 end
 
 action :put do
-  load_aws_gem()
   # TODO: This would be great to do in some sort of "constructor" or elsewhere since we'll have to
   # do it for all actions
   AWS::S3::Base.establish_connection!(

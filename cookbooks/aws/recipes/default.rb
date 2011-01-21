@@ -7,6 +7,10 @@
 # All rights reserved - Do Not Redistribute
 #
 
-ruby_gems_package "aws-s3" do
-  action :install
+g = ruby_gems_package "aws-s3" do
+  action :nothing
 end
+
+g.run_action(:install)
+
+Gem.clear_paths
