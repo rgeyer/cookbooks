@@ -4,14 +4,20 @@ require 'socket'
 
 include_recipe "ruby_gems::default"
 
-ruby_gems_package "rest_connection" do
+r = ruby_gems_package "rest_connection" do
   version rest_connection_version
-  action :install
+  action :nothing
 end
 
-ruby_gems_package "i18n" do
-  action :install
+r.run_action(:install)
+
+i = ruby_gems_package "i18n" do
+  action :nothing
 end
+
+i.run_action(:install)
+
+Gem.clear_paths
 
 directory value_for_platform("windows" => {"default" => "C:/Users/RightScale_1/.rest_connection"}, "default" => "/etc/rest_connection") do
   recursive true
