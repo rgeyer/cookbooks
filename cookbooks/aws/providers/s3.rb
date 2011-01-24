@@ -62,7 +62,7 @@ action :put do
   if history_to_keep && s3_file_prefix
     file_list = AWS::S3::Bucket.objects(s3_bucket, :prefix => s3_file_prefix).sort {|x,y| x.key <=> x.key}
     num_to_delete = file_list.size - history_to_keep
-    Chef::Log.info("Deleting #{num_to_delete} files with the prefix #{s3_file_prefix}.")
+    Chef::Log.info("Deleting #{num_to_delete} files with the prefix #{s3_file_prefix}.") if num_to_delete > 0
     file_list.each_with_index {|file,idx|
       if idx == num_to_delete then break end
       file.delete
