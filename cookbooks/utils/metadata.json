@@ -18,7 +18,8 @@
   "version": "0.0.1",
   "maintainer": "Ryan J. Geyer",
   "recipes": {
-    "utils::install_rest_connection_gem": "Installs version 0.0.15 of the rest_connection gem on either Windows or *nix"
+    "utils::install_rest_connection_gem": "Installs version 0.0.15 of the rest_connection gem on either Windows or *nix",
+    "utils::default": "purely experimental"
   },
   "replacing": {
   },
