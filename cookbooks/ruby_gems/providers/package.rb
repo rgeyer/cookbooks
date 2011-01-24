@@ -7,14 +7,17 @@ action :install do
     # NOTE: For Windows, this installs the rest_connection config yaml file only for the RightScale_1 user, so if you try
     # to use it for other stuff like, say a scheduled windows task that runs as administrator, you'd be hosed.
 
-    rs_sandbox_exec "Install rest_connection gem" do
+    a = rs_sandbox_exec "Install rest_connection gem" do
       code <<-EOF
 cmd /c gem #{install_command}
       EOF
     end
+
+    a.run_action(:install)
+
   else
     # Installs for the servers system environment
-    gem_package new_resource.name do
+    b = gem_package new_resource.name do
       if new_resource.version
         version new_resource.version
       end
@@ -25,7 +28,7 @@ cmd /c gem #{install_command}
     end
 
     # Installs for the RightScale sandbox
-    gem_package new_resource.name do
+    c = gem_package new_resource.name do
       if new_resource.version
         version new_resource.version
       end
@@ -36,6 +39,9 @@ cmd /c gem #{install_command}
       action :install
     end
   end
+
+  b.run_action(:install)
+  c.run_action(:install)
 
   Gem.clear_paths
 end

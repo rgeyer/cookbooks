@@ -6,16 +6,16 @@ include_recipe "ruby_gems::default"
 
 r = ruby_gems_package "rest_connection" do
   version rest_connection_version
-  action :nothing
+  action :install
 end
 
-r.run_action(:install)
+#r.run_action(:install)
 
 i = ruby_gems_package "i18n" do
-  action :nothing
+  action :install
 end
 
-i.run_action(:install)
+#i.run_action(:install)
 
 Gem.clear_paths
 
