@@ -2,18 +2,16 @@ rest_connection_version="0.0.15"
 
 require 'socket'
 
-include_recipe "ruby_gems::default"
+#include_recipe "ruby_gems::default"
 
-install_command = "install --both --no-rdoc --no-force --no-test --no-ri --ignore-dependencies"
-install_command += " --version 0.0.15 rest_connection"
-if node[:platform] == "windows"
-  # NOTE: For Windows, this installs the rest_connection config yaml file only for the RightScale_1 user, so if you try
-  # to use it for other stuff like, say a scheduled windows task that runs as administrator, you'd be hosed.
-  `LocateSandbox && SET PATH=%RS_SANDBOX_PATH%\Ruby\bin;%PATH% && gem #{install_command}`
-
-  a.run_action(:install)
-
-else
+#install_command = "install --both --no-rdoc --no-force --no-test --no-ri --ignore-dependencies"
+#install_command += " --version 0.0.15 rest_connection"
+#if node[:platform] == "windows"
+#  # NOTE: For Windows, this installs the rest_connection config yaml file only for the RightScale_1 user, so if you try
+#  # to use it for other stuff like, say a scheduled windows task that runs as administrator, you'd be hosed.
+#  `LocateSandbox && SET PATH=%RS_SANDBOX_PATH%\Ruby\bin;%PATH% && gem #{install_command}`
+#
+#else
   # Installs for the servers system environment
   b = gem_package "rest_connection" do
     version rest_connection_version
@@ -26,10 +24,10 @@ else
     gem_binary "/opt/rightscale/sandbox/bin/gem"
     action :nothing
   end
-end
+#end
 
 b.run_action(:install)
-c.run_action(:install)
+c.run_action(:install) if ::File.exists? "/opt/rightscale/sandbox/bin/gem"
 
 Gem.clear_paths
 
