@@ -7,4 +7,7 @@
 # All rights reserved - Do Not Redistribute
 #
 
+`LocateSandbox.bat`
+`SET PATH=%RS_SANDBOX_PATH%\Ruby\bin;%PATH%`
+
 Chef::Log.info(`gem list`)
