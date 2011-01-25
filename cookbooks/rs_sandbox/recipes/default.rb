@@ -7,17 +7,11 @@
 # All rights reserved - Do Not Redistribute
 #
 
-if node[:platform] == "windows"
-  # Setup the environment for this run
-  `SET PATH=%RS_SANDBOX_HOME%Ruby\\bin;%PATH%`
-  # Echo it, for the hell of it
-  `echo %PATH%`
-end
-
 grep_bin = value_for_platform("windows" => {"default" => "findstr"}, "default" => "grep")
 
 # TODO: Is there a better way to do this? Like an attributes/windows.rb file?
-node[:rs_sandbox][:gem_bin] = "#{`echo %RS_SANDBOX_HOME%`.strip}\\Ruby\\bin\\gem.bat" if node[:platform] == "windows"
+node[:rs_sandbox][:home] = `echo %RS_SANDBOX_HOME%`.strip if node[:platform] == "windows"
+node[:rs_sandbox][:gem_bin] = "#{node[:rs_sandbox][:home]}\\Ruby\\bin\\ruby.exe #{node[:rs_sandbox][:home]}\\Ruby\\bin\\gem" if node[:platform] == "windows"
 
 gem_source_already_added = `#{node[:rs_sandbox][:gem_bin]} sources --list | #{grep_bin} 'http://rubygems.org'`
 
