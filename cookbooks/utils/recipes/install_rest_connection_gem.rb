@@ -1,36 +1,35 @@
+include_recipe "rs_sandbox::default"
+
 require 'socket'
 rest_connection_version="0.0.15"
-rs_sandbox_gem_bin = value_for_platform("windows" => {"default" => "#{`echo %RS_SANDBOX_HOME%`.strip}\\Ruby\\bin\\gem.bat"}, "default" => "/opt/rightscale/sandbox/bin/gem")
 
-`#{rs_sandbox_gem_bin} sources --add 'http://rubygems.org'` unless `#{rs_sandbox_gem_bin} sources --list | findstr 'http://rubygems.org'`
+load_ruby_gem_into_rs_sandbox("rest_connection", rest_connection_version)
 
-if node[:platform] != "windows"
-  include_recipe "rubygems::default"
-  Chef::Log.info("Installing the rest_connection #{rest_connection_version} gem for the system Ruby runtime")
-  # Installs for the servers system environment
-  gem_package "rest_connection" do
-    version rest_connection_version
-    action :install
-  end
-else
-  # NOTE: For Windows, this installs the rest_connection config yaml file only for the RightScale_1 user, so if you try
-  # to use it for other stuff like, say a scheduled windows task that runs as administrator, you'd be hosed.
-
-  `#{rs_sandbox_gem_bin} sources --add 'http://rubygems.org'` unless `#{rs_sandbox_gem_bin} sources --list | findstr 'http://rubygems.org'`
-
-  # Installs for the RightScale sandbox
-  c = gem_package "rest_connection" do
-    version rest_connection_version
-    gem_binary rs_sandbox_gem_bin
-    action :nothing
-  end
-
-  Chef::Log.info("Installing the rest_connection #{rest_connection_version} gem for the system Ruby runtime, using gem binary #{rs_sandbox_gem_bin}")
-
-  c.run_action(:install) if ::File.exists? rs_sandbox_gem_bin
-end
-
-Gem.clear_paths
+#if node[:platform] != "windows"
+#  include_recipe "rubygems::default"
+#  Chef::Log.info("Installing the rest_connection #{rest_connection_version} gem for the system Ruby runtime")
+#  # Installs for the servers system environment
+#  gem_package "rest_connection" do
+#    version rest_connection_version
+#    action :install
+#  end
+#else
+#  # NOTE: For Windows, this installs the rest_connection config yaml file only for the RightScale_1 user, so if you try
+#  # to use it for other stuff like, say a scheduled windows task that runs as administrator, you'd be hosed.
+#
+#  # Installs for the RightScale sandbox
+#  c = gem_package "rest_connection" do
+#    version rest_connection_version
+#    gem_binary rs_sandbox_gem_bin
+#    action :nothing
+#  end
+#
+#  Chef::Log.info("Installing the rest_connection #{rest_connection_version} gem for the system Ruby runtime, using gem binary #{rs_sandbox_gem_bin}")
+#
+#  c.run_action(:install) if ::File.exists? rs_sandbox_gem_bin
+#end
+#
+#Gem.clear_paths
 
 directory value_for_platform("windows" => {"default" => "C:/Users/RightScale_1/.rest_connection"}, "default" => "/etc/rest_connection") do
   recursive true
