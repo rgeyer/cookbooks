@@ -1,6 +1,7 @@
 = DESCRIPTION:
 
 = REQUIREMENTS:
+http://www.rightscale.com/library/right_scripts/SYS-Add-RightScale-Sandbox-to-/16830
 
 = ATTRIBUTES:
 

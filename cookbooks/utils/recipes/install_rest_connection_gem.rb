@@ -2,12 +2,12 @@ rest_connection_version="0.0.15"
 
 require 'socket'
 
-include_recipe "rubygems::default"
 `#{rs_sandbox_gem_bin} sources --add 'http://rubygems.org'` unless `#{rs_sandbox_gem_bin} sources --list | findstr 'http://rubygems.org'`
 
 rs_sandbox_gem_bin=value_for_platform("windows" => {"default" => "#{`echo %RS_SANDBOX_HOME%`.strip}\\Ruby\\bin\\gem.bat"}, "default" => "/opt/rightscale/sandbox/bin/gem")
 
 if node[:platform] != "windows"
+  include_recipe "rubygems::default"
   Chef::Log.info("Installing the rest_connection #{rest_connection_version} gem for the system Ruby runtime")
   # Installs for the servers system environment
   gem_package "rest_connection" do
