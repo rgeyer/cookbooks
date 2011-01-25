@@ -13,9 +13,9 @@ grep_bin = value_for_platform("windows" => {"default" => "findstr"}, "default" =
 node[:rs_sandbox][:home] = `echo %RS_SANDBOX_HOME%`.strip if node[:platform] == "windows"
 node[:rs_sandbox][:gem_bin] = "#{node[:rs_sandbox][:home]}\\Ruby\\bin\\ruby.exe #{node[:rs_sandbox][:home]}\\Ruby\\bin\\gem" if node[:platform] == "windows"
 
-gem_source_already_added = `#{node[:rs_sandbox][:gem_bin]} sources --list | #{grep_bin} 'http://rubygems.org'`
+gem_source_already_added = `#{node[:rs_sandbox][:gem_bin]} sources --list | #{grep_bin} "http://rubygems.org"`
 
-unless gem_source_already_added.strip == "http://rubygems.org"
+if gem_source_already_added.strip == ""
   Chef::Log.info("Adding http://rubygems.org to gem source for RightScale sandbox")
-  `#{node[:rs_sandbox][:gem_bin]} sources --add 'http://rubygems.org'`
+  `#{node[:rs_sandbox][:gem_bin]} sources --add http://rubygems.org/`
 end
