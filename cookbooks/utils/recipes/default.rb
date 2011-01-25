@@ -8,6 +8,6 @@
 #
 
 gem_path=`echo %RS_SANDBOX_HOME%`.strip
-gem_path+="\\Ruby\\bin\\gem"
+gem_path+="\\Ruby\\bin\\gem.bat"
 
 Chef::Log.info(`#{gem_path} list`)
