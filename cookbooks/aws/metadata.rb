@@ -5,7 +5,7 @@ description      "Installs/Configures aws"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
 version          "0.0.1"
 
-depends "ruby_gems"
+depends "rs_sandbox"
 
 recipe "aws::default", "Installs some ruby gems (aws-s3)"
 

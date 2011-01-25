@@ -5,9 +5,6 @@
   "dependencies": {
     "rs_sandbox": [
 
-    ],
-    "ruby_gems": [
-
     ]
   },
   "conflicting": {
