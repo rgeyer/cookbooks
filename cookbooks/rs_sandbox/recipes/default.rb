@@ -14,7 +14,7 @@ node[:rs_sandbox][:gem_bin] = "#{`echo %RS_SANDBOX_HOME%`.strip}\\Ruby\\bin\\gem
 
 gem_source_already_added = `#{node[:rs_sandbox][:gem_bin]} sources --list | #{grep_bin} 'http://rubygems.org'`
 
-unless gem_source_already_added
+unless gem_source_already_added.strip == "http://rubygems.org"
   Chef::Log.info("Adding http://rubygems.org to gem source for RightScale sandbox")
   `#{node[:rs_sandbox][:gem_bin]} sources --add 'http://rubygems.org'`
 end
