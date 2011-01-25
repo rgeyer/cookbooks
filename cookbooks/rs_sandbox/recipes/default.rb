@@ -7,6 +7,13 @@
 # All rights reserved - Do Not Redistribute
 #
 
+if node[:platform] == "windows"
+  # Setup the environment for this run
+  `SET PATH=%RS_SANDBOX_HOME%Ruby\\bin;%PATH%`
+  # Echo it, for the hell of it
+  `echo %PATH%`
+end
+
 grep_bin = value_for_platform("windows" => {"default" => "findstr"}, "default" => "grep")
 
 # TODO: Is there a better way to do this? Like an attributes/windows.rb file?
