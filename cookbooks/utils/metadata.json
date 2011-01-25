@@ -3,13 +3,16 @@
   "suggestions": {
   },
   "dependencies": {
+    "rs_sandbox": [
+
+    ],
     "ruby_gems": [
 
     ]
   },
   "conflicting": {
   },
-  "long_description": "= DESCRIPTION:\n\n= REQUIREMENTS:\n\n= ATTRIBUTES:\n\n= USAGE:\n\n",
+  "long_description": "= DESCRIPTION:\n\n= REQUIREMENTS:\nhttp://www.rightscale.com/library/right_scripts/SYS-Add-RightScale-Sandbox-to-/16830\n\n= ATTRIBUTES:\n\n= USAGE:\n\n",
   "description": "Installs/Configures utils",
   "providing": {
   },
@@ -18,8 +21,7 @@
   "version": "0.0.1",
   "maintainer": "Ryan J. Geyer",
   "recipes": {
-    "utils::install_rest_connection_gem": "Installs version 0.0.15 of the rest_connection gem on either Windows or *nix",
-    "utils::default": "purely experimental"
+    "utils::install_rest_connection_gem": "Installs version 0.0.15 of the rest_connection gem on either Windows or *nix"
   },
   "replacing": {
   },

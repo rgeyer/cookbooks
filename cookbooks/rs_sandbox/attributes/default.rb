@@ -1,0 +1,1 @@
+default[:rs_sandbox][:gem_bin] = "/opt/rightscale/sandbox/bin/gem"

@@ -18,6 +18,7 @@
   "version": "0.0.1",
   "maintainer": "Ryan J. Geyer",
   "recipes": {
+    "rs_sandbox::default": "Sets up some useful bits for working with the RightScale sandbox in windows and *niz"
   },
   "replacing": {
   },
