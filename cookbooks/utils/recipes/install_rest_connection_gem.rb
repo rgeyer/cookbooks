@@ -24,10 +24,11 @@ else
     gem_binary "/opt/rightscale/sandbox/bin/gem"
     action :nothing
   end
+
+  b.run_action(:install)
+  c.run_action(:install) if ::File.exists? "/opt/rightscale/sandbox/bin/gem"
 end
 
-b.run_action(:install)
-c.run_action(:install) if ::File.exists? "/opt/rightscale/sandbox/bin/gem"
 
 Gem.clear_paths
 

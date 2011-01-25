@@ -13,6 +13,16 @@
 #
 #g.run_action(:install)
 
+r = gem_package "right_aws" do
+  action :nothing
+end
+
+r.run_action(:install)
+
+require 'rubygems'
+Gem.clear_paths
+require 'right_aws'
+
 # Installs for the servers system environment
 b = gem_package "aws-s3" do
   action :nothing
