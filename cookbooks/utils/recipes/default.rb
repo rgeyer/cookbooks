@@ -6,7 +6,3 @@
 #
 # All rights reserved - Do Not Redistribute
 #
-
-`SETX PATH %RS_SANDBOX_HOME%\\Ruby\\bin` unless `echo %RS_SANDBOX_HOME%` =~ /Ruby\\bin/
-
-Chef::Log.info(`gem.bat list`)
