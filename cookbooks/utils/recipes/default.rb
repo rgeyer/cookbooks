@@ -11,3 +11,5 @@
 Chef::Log.info(`echo %RS_SANDBOX_PATH%`)
 `SET PATH=%RS_SANDBOX_PATH%\Ruby\bin;%PATH%`
 Chef::Log.info(`echo %PATH%`)
+
+Chef::Log.info(ENV.to_yaml)
