@@ -2,21 +2,23 @@ rest_connection_version="0.0.15"
 
 require 'socket'
 
-#include_recipe "ruby_gems::default"
+include_recipe "rubygems::default"
+`#{rs_sandbox_gem_bin} sources --add 'http://rubygems.org'` unless `#{rs_sandbox_gem_bin} sources --list | findstr 'http://rubygems.org'`
 
 rs_sandbox_gem_bin=value_for_platform("windows" => {"default" => "#{`echo %RS_SANDBOX_HOME%`.strip}\\Ruby\\bin\\gem.bat"}, "default" => "/opt/rightscale/sandbox/bin/gem")
 
 if node[:platform] != "windows"
+  Chef::Log.info("Installing the rest_connection #{rest_connection_version} gem for the system Ruby runtime")
   # Installs for the servers system environment
-  b = gem_package "rest_connection" do
+  gem_package "rest_connection" do
     version rest_connection_version
-    action :nothing
+    action :install
   end
-
-  b.run_action(:install)
 else
   # NOTE: For Windows, this installs the rest_connection config yaml file only for the RightScale_1 user, so if you try
   # to use it for other stuff like, say a scheduled windows task that runs as administrator, you'd be hosed.
+
+  `#{rs_sandbox_gem_bin} sources --add 'http://rubygems.org'` unless `#{rs_sandbox_gem_bin} sources --list | findstr 'http://rubygems.org'`
 
   # Installs for the RightScale sandbox
   c = gem_package "rest_connection" do
@@ -24,6 +26,8 @@ else
     gem_binary rs_sandbox_gem_bin
     action :nothing
   end
+
+  Chef::Log.info("Installing the rest_connection #{rest_connection_version} gem for the system Ruby runtime, using gem binary #{rs_sandbox_gem_bin}")
 
   c.run_action(:install) if ::File.exists? rs_sandbox_gem_bin
 end
