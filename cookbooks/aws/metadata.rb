@@ -7,7 +7,7 @@ version          "0.0.1"
 
 depends "rs_sandbox"
 
-recipe "aws::default", "Installs some ruby gems (aws-s3)"
+recipe "aws::default", "Installs some ruby gems (right_aws)"
 
 supports "ubuntu"
 

@@ -9,5 +9,4 @@
 
 include_recipe "rs_sandbox::default"
 
-load_ruby_gem_into_rs_sandbox("aws-s3")
 load_ruby_gem_into_rs_sandbox("right_aws")

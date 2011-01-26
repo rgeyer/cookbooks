@@ -21,7 +21,7 @@
   "version": "0.0.1",
   "maintainer": "Ryan J. Geyer",
   "recipes": {
-    "aws::default": "Installs some ruby gems (aws-s3)"
+    "aws::default": "Installs some ruby gems (right_aws)"
   },
   "replacing": {
   },
