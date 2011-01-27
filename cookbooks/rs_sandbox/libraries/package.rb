@@ -24,7 +24,7 @@ def load_ruby_gem_into_rs_sandbox(gem_name, gem_version=nil, gem_source=nil)
 
     if gem_already_installed.strip == ""
       Chef::Log.info("Installing #{gem_name} #{gem_version} gem in the RightScale sandbox")
-      install_params = "install --both --no-rdoc --no-force --no-test --no-ri --ignore-dependencies"
+      install_params = "install --both --no-rdoc --no-force --no-test --no-ri"
       install_params += " --version '#{gem_version}'" if gem_version
       install_params += " --source '#{gem_source}'" if gem_source
       install_params += " #{gem_name}"
