@@ -50,4 +50,5 @@ def load_ruby_gem_into_rs_sandbox(gem_name, gem_version=nil, gem_source=nil)
   end
 
   Gem.clear_paths
+  require gem_name
 end
