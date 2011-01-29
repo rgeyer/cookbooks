@@ -1,4 +1,4 @@
-actions :create, :attach, :detach, :snapshot, :prune
+actions :create, :attach, :detach, :snapshot, :prune, :delete
 
 attribute :aws_access_key,        :kind_of => String
 attribute :aws_secret_access_key, :kind_of => String

@@ -90,6 +90,15 @@ action :prune do
   end
 end
 
+action :delete do
+  vol = determine_volume
+  if vol[:aws_status] == "available"
+    ec2.delete_volume(vol[:aws_volume_id])
+  end
+  new_resource.updated_by_last_action(true) if new_resource.respond_to? 'updated_by_last_action'
+  new_resource.updated = true if new_resource.updated
+end
+
 private
 
 def volume_id_in_node_data
