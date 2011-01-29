@@ -4,7 +4,7 @@ require 'socket'
 rest_connection_version="0.0.15"
 
 load_ruby_gem_into_rs_sandbox("rest_connection", rest_connection_version, nil, true)
-load_ruby_gem_into_rs_sandbox("i18n")
+load_ruby_gem_into_rs_sandbox("i18n", nil, nil, true)
 
 directory value_for_platform("windows" => {"default" => "C:/Users/RightScale_1/.rest_connection"}, "default" => "/etc/rest_connection") do
   recursive true
