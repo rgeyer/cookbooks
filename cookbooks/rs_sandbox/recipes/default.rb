@@ -13,7 +13,7 @@ grep_bin = value_for_platform("windows" => {"default" => "findstr"}, "default" =
 if node[:platform] == "windows"
   node[:rs_sandbox][:home] = `echo %RS_SANDBOX_HOME%`.strip
   node[:rs_sandbox][:gem_bin] = "#{node[:rs_sandbox][:home]}\\Ruby\\bin\\ruby.exe #{node[:rs_sandbox][:home]}\\Ruby\\bin\\gem"
-  node[:rs_sandbox][:rl_user_home_dir] = `echo %USERPROFILE%`
+  node[:rs_sandbox][:rl_user_home_dir] = `echo %USERPROFILE%`.strip
 end
 
 gem_source_already_added = `#{node[:rs_sandbox][:gem_bin]} sources --list | #{grep_bin} "http://rubygems.org"`
