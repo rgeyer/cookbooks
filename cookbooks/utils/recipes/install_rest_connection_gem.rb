@@ -6,14 +6,14 @@ rest_connection_version="0.0.15"
 load_ruby_gem_into_rs_sandbox("i18n", nil, nil, true)
 load_ruby_gem_into_rs_sandbox("rest_connection", rest_connection_version, nil, false)
 
-d = directory value_for_platform("windows" => {"default" => "C:/Users/RightScale_1/.rest_connection"}, "default" => "/etc/rest_connection") do
+d = directory value_for_platform("windows" => {"default" => "#{node[:rs_sandbox][:rl_user_home_dir]}/.rest_connection"}, "default" => "/etc/rest_connection") do
   recursive true
   action :nothing
 end
 
 d.run_action(:create)
 
-t = template value_for_platform("windows" => {"default" => "C:/Users/RightScale_1/.rest_connection/rest_api_config.yaml"}, "default" => "/etc/rest_connection/rest_api_config.yaml") do
+t = template value_for_platform("windows" => {"default" => "#{node[:rs_sandbox][:rl_user_home_dir]}/.rest_connection/rest_api_config.yaml"}, "default" => "/etc/rest_connection/rest_api_config.yaml") do
   source "rest_api_config.yaml.erb"
   variables(
     :rest_pass => node[:utils][:rest_pass],
