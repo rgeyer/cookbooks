@@ -1,12 +1,14 @@
 include RGeyer::Aws::S3
 
 action :get do
-  s3_file=new_resource.s3_file
+  s3_file = new_resource.s3_file
 
   if(new_resource.s3_file_prefix)
     file_list = s3.bucket(new_resource.s3_bucket).keys('prefix' => new_resource.s3_file_prefix).sort {|x,y| x.name <=> y.name}
     latest_file = file_list.last
     s3_file = latest_file
+  else
+    s3_file = s3.bucket(new_resource.s3_bucket).key(s3_file)
   end
 
   fq_filepath = new_resource.file_path
