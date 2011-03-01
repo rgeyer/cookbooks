@@ -1,33 +1,33 @@
 {
-  "license": "All rights reserved",
-  "suggestions": {
-  },
-  "dependencies": {
-  },
   "conflicting": {
   },
-  "long_description": "= DESCRIPTION:\n\n= REQUIREMENTS:\n\n= ATTRIBUTES:\n\n= USAGE:\n\n",
-  "description": "Installs/Configures rs_sandbox",
+  "license": "All rights reserved",
   "providing": {
     "rs_sandbox_exec(:code)": [
 
     ]
   },
-  "platforms": {
-  },
-  "version": "0.0.1",
-  "maintainer": "Ryan J. Geyer",
   "recipes": {
     "rs_sandbox::default": "Sets up some useful bits for working with the RightScale sandbox in windows and *niz"
   },
+  "maintainer": "Ryan J. Geyer",
   "replacing": {
   },
   "maintainer_email": "me@ryangeyer.com",
-  "name": "rs_sandbox",
+  "description": "Installs/Configures rs_sandbox",
+  "version": "0.0.1",
   "groupings": {
   },
   "attributes": {
   },
   "recommendations": {
-  }
+  },
+  "dependencies": {
+  },
+  "platforms": {
+  },
+  "name": "rs_sandbox",
+  "suggestions": {
+  },
+  "long_description": "= DESCRIPTION:\n\n= REQUIREMENTS:\n\n= ATTRIBUTES:\n\n= USAGE:\n\n"
 }
