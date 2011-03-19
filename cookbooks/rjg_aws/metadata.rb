@@ -7,7 +7,7 @@ version          "0.0.1"
 
 depends "rs_sandbox"
 
-recipe "aws::default", "Installs some ruby gems (right_aws)"
+recipe "rjg_aws::default", "Installs some ruby gems (right_aws) into the RightScale sandbox"
 
 supports "ubuntu"
 
