@@ -1,7 +1,7 @@
 begin
   require 'right_aws'
 rescue LoadError
-  Chef::Log.warn("Missing gem 'right_aws', make sure to run aws::default")
+  Chef::Log.warn("Missing gem 'right_aws', make sure to run rjg_aws::default")
 end
 
 module RGeyer

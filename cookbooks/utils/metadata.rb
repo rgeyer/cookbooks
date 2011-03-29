@@ -7,6 +7,8 @@ version          "0.0.1"
 
 depends "rs_sandbox"
 
+provides "rsa_keypair_from_pkcs12(:aws_access_key_id, :aws_secret_access_key, :s3_bucket, :s3_file, :pkcs12_pass, :rsa_cert_path, :rsa_key_path)"
+
 recipe "utils::install_rest_connection_gem", "Installs version 0.0.15 of the rest_connection gem on either Windows or *nix"
 
 attribute "utils/rest_pass",
