@@ -5,7 +5,7 @@
   "providing": {
   },
   "recipes": {
-    "aws::default": "Installs some ruby gems (right_aws)"
+    "rjg_aws::default": "Installs some ruby gems (right_aws) into the RightScale sandbox"
   },
   "maintainer": "Ryan J. Geyer",
   "replacing": {
@@ -55,7 +55,7 @@
 
     ]
   },
-  "name": "aws",
+  "name": "rjg_aws",
   "suggestions": {
   },
   "long_description": "= DESCRIPTION:\n\n= REQUIREMENTS:\n\n= ATTRIBUTES:\n\n= Resources\n\n== S3\n\nAction :put\nParameters (required)\n* access_key_id\n* secret_access_key\n* s3_bucket\n* file_path\n\nParameters (optional)\n* s3_file (Provide this if you want to specify the exact name of the file when it is stored in S3)\n* s3_file_prefix (Provide this if you want the resource to append a datetime string to the file name, allowing you to keep a history of a particular file type.  Useful for keeping a history of backup files)\n* history_to_keep (Provide this if you want the resource to delete older files with the s3_file_prefix so that there are only :history_to_keep total in the bucket)\n\nNote that when you specify the s3_file_prefix and allow the resource to append a datetime string, there will be no file extension, so be sure you remember what it is.\n\n= USAGE:\n\n"
