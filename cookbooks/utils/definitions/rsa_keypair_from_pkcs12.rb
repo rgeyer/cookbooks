@@ -8,7 +8,7 @@ define :rsa_keypair_from_pkcs12, :aws_access_key_id => nil, :aws_secret_access_k
     action :create
   end
 
-  aws_s3 "Get the PKCS12 file" do
+  rjg_aws_s3 "Get the PKCS12 file" do
     access_key_id params[:aws_access_key_id]
     secret_access_key params[:aws_secret_access_key]
     s3_bucket params[:s3_bucket]
