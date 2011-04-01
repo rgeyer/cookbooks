@@ -9,4 +9,4 @@
 
 include_recipe "rs_sandbox::default"
 
-load_ruby_gem_into_rs_sandbox("right_aws", nil, nil, true)
+load_ruby_gem_into_rs_sandbox("right_aws", "2.0.0", nil, true)
