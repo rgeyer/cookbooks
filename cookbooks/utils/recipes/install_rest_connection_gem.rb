@@ -27,4 +27,6 @@ t.run_action(:create)
 
 # A useful way to find "this" instance when running scripts that use rest_connection
 # Tag.search('ec2_instance', ["ipv4:private=#{IPSocket.getaddress(Socket.gethostname)}"])
-right_link_tag "ipv4:private=#{IPSocket.getaddress(Socket.gethostname)}"
+skeme_tag "ipv4:private=#{IPSocket.getaddress(Socket.gethostname)}" do
+  action :add
+end

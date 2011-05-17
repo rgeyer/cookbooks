@@ -1,23 +1,10 @@
 {
-  "conflicting": {
+  "dependencies": {
+    "rs_sandbox": ">= 0.0.0",
+    "skeme": ">= 0.0.0"
   },
-  "license": "All rights reserved",
-  "providing": {
-    "rsa_keypair_from_pkcs12(:aws_access_key_id, :aws_secret_access_key, :s3_bucket, :s3_file, :pkcs12_pass, :rsa_cert_path, :rsa_key_path)": [
-
-    ]
-  },
-  "recipes": {
-    "utils::install_rest_connection_gem": "Installs version 0.0.15 of the rest_connection gem on either Windows or *nix"
-  },
-  "maintainer": "Ryan J. Geyer",
-  "replacing": {
-  },
+  "name": "utils",
   "maintainer_email": "me@ryangeyer.com",
-  "description": "Installs/Configures utils",
-  "version": "0.0.1",
-  "groupings": {
-  },
   "attributes": {
     "utils/rest_user": {
       "required": "required",
@@ -29,8 +16,8 @@
       "recipes": [
         "utils::install_rest_connection_gem"
       ],
-      "description": "The email address used to log into the RightScale dashboard, and the REST API",
-      "display_name": "REST API Username"
+      "display_name": "REST API Username",
+      "description": "The email address used to log into the RightScale dashboard, and the REST API"
     },
     "utils/rest_pass": {
       "required": "required",
@@ -42,8 +29,8 @@
       "recipes": [
         "utils::install_rest_connection_gem"
       ],
-      "description": "The password used to log into the RightScale dashboard, and the REST API",
-      "display_name": "REST API Password"
+      "display_name": "REST API Password",
+      "description": "The password used to log into the RightScale dashboard, and the REST API"
     },
     "utils/rest_acct_num": {
       "required": "required",
@@ -55,21 +42,31 @@
       "recipes": [
         "utils::install_rest_connection_gem"
       ],
-      "description": "Your RightScale account number",
-      "display_name": "RightScale Account Number"
+      "display_name": "RightScale Account Number",
+      "description": "Your RightScale account number"
     }
   },
-  "recommendations": {
-  },
-  "dependencies": {
-    "rs_sandbox": [
-
-    ]
+  "license": "All rights reserved",
+  "suggestions": {
   },
   "platforms": {
   },
-  "name": "utils",
-  "suggestions": {
+  "maintainer": "Ryan J. Geyer",
+  "long_description": "= DESCRIPTION:\n\n= REQUIREMENTS:\nhttp://www.rightscale.com/library/right_scripts/SYS-Add-RightScale-Sandbox-to-/16830\n\n= ATTRIBUTES:\n\n= USAGE:\n\n",
+  "version": "0.0.1",
+  "recommendations": {
   },
-  "long_description": "= DESCRIPTION:\n\n= REQUIREMENTS:\nhttp://www.rightscale.com/library/right_scripts/SYS-Add-RightScale-Sandbox-to-/16830\n\n= ATTRIBUTES:\n\n= USAGE:\n\n"
+  "recipes": {
+    "utils::install_rest_connection_gem": "Installs version 0.0.15 of the rest_connection gem on either Windows or *nix"
+  },
+  "groupings": {
+  },
+  "conflicting": {
+  },
+  "replacing": {
+  },
+  "description": "Installs/Configures utils",
+  "providing": {
+    "rsa_keypair_from_pkcs12(:aws_access_key_id, :aws_secret_access_key, :s3_bucket, :s3_file, :pkcs12_pass, :rsa_cert_path, :rsa_key_path)": ">= 0.0.0"
+  }
 }
