@@ -9,4 +9,22 @@
 
 include_recipe "rs_sandbox::default"
 
-load_ruby_gem_into_rs_sandbox("right_aws", "2.0.0", nil, true)
+gem_name = "right_aws"
+gem_version = "2.0.0"
+
+load_ruby_gem_into_rs_sandbox(gem_name, gem_version, nil, true)
+
+# TODO: This currently only supports *nix OS's because there is no "system" ruby for windows.
+if node[:platform] != "windows"
+g = gem_package gem_name do
+    if gem_version
+      version gem_version
+    end
+    action :nothing
+  end
+
+  g.run_action(:install)
+
+  Gem.clear_paths
+  require gem_name
+end

@@ -1,0 +1,60 @@
+= DESCRIPTION:
+Skeme is a cloud management tagging library for Opscode Chef.
+
+With one LWRP you can tag your server in RightScale, EC2, and Opscode Chef.
+
+= REQUIREMENTS:
+In order to set or delete EC2 tags you must supply +aws_access_key+ and +aws_secret_access_key+ to the provider so that
+communication with AWS can be established.
+
+In order to set or delete Opscode Chef tags, you must run the recipe which uses skeme as a chef client in a Chef runtime >= 0.10.0.
+In other words, opscode tags will not get set when executing Skeme from a recipe run in the RightScale dashboard (RightScale uses Chef-Solo 0.8.16 at the time of this writing).
+
+= ATTRIBUTES:
+
+= USAGE:
+
+Setting the tag "foo:bar=baz" on all cloud management platforms (RightScale, EC2, Opscode)
+
+  skeme_tag "foo:bar=baz" do
+    aws_access_key "..."
+    aws_secret_access_key "..."
+    action :add
+  end
+
+Setting the tag "foo:bar=baz" for RightScale and EC2, but "opscode:unique=true" on Opscode
+
+  skeme_tag "foo:bar=baz" do
+    aws_access_key "..."
+    aws_secret_access_key "..."
+    chef_tag "opscode:unique=true"
+    action :add
+  end
+
+Setting unique tags for each cloud management platform
+
+  skeme_tag "This is just decoration now" do
+    aws_access_key "..."
+    aws_secret_access_key "..."
+    ec2_tag "ec2:unique=true"
+    chef_tag "opscode:unique=true"
+    rs_tag "rs:unique=true"
+    action :add
+  end
+
+
+= LICENSE & AUTHOR
+
+Author:: Ryan J. Geyer (<me@ryangeyer.com>)
+Copyright 2011 Ryan J. Geyer
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
