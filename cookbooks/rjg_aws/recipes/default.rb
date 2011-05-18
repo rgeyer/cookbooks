@@ -7,10 +7,15 @@
 # All rights reserved - Do Not Redistribute
 #
 
+require 'yaml'
+
 include_recipe "rs_sandbox::default"
 
 gem_name = "right_aws"
 gem_version = "2.0.0"
+
+Chef::Log.info("Chef packages node attribute coming right up...")
+Chef::Log.info(node[:chef_packages].to_yaml)
 
 if node[:chef_packages][:chef][:chef_root].start_with? '/opt/rightscale/sandbox'
   load_ruby_gem_into_rs_sandbox(gem_name, gem_version, nil, true)
