@@ -49,7 +49,9 @@ def tag(action)
   end
 
   # TODO: Consider a mechanism that will work even in RightScale and Chef-Solo
-  if Gem::Version.new(node[:chef_packages][:chef][:version]) >= Gem::Version.new('0.10.0')
+  # TODO: This is a hacky check to see if we're running as chef-solo in the RightScale sandbox
+  #if Gem::Version.new(node[:chef_packages][:chef][:version]) >= Gem::Version.new('0.10.0')
+  if node[:rightscale_deprecated]
     if action == "add"
       if !node[:tags].include? chef_tag
         node[:tags] << chef_tag
