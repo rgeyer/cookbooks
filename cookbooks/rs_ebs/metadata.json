@@ -1,8 +1,8 @@
 {
   "dependencies": {
-    "rs_sandbox": ">= 0.0.0"
+    "rjg_aws": ">= 0.0.0"
   },
-  "name": "rjg_aws",
+  "name": "rs_ebs",
   "maintainer_email": "me@ryangeyer.com",
   "attributes": {
     "aws/secret_access_key": {
@@ -13,7 +13,7 @@
       ],
       "type": "string",
       "recipes": [
-
+        "rs_ebs::attach_volume"
       ],
       "display_name": "Secret Access Key",
       "description": "This is an Amazon credential. Log in to your AWS account at aws.amazon.com to retrieve your access identifiers. Ex: XVdxPgOM4auGcMlPz61IZGotpr9LzzI07tT8s2Ws"
@@ -26,7 +26,7 @@
       ],
       "type": "string",
       "recipes": [
-
+        "rs_ebs::attach_volume"
       ],
       "display_name": "Access Key Id",
       "description": "This is an Amazon credential. Log in to your AWS account at aws.amazon.com to retrieve you access identifiers. Ex: 1JHQQ4KVEVM02KVEVM02"
@@ -40,12 +40,11 @@
     "ubuntu": ">= 0.0.0"
   },
   "maintainer": "Ryan J. Geyer",
-  "long_description": "= DESCRIPTION:\n\n= REQUIREMENTS:\n\n= ATTRIBUTES:\n\n= Resources\n\n== S3\n\nAction :put\nParameters (required)\n* access_key_id\n* secret_access_key\n* s3_bucket\n* file_path\n\nParameters (optional)\n* s3_file (Provide this if you want to specify the exact name of the file when it is stored in S3)\n* s3_file_prefix (Provide this if you want the resource to append a datetime string to the file name, allowing you to keep a history of a particular file type.  Useful for keeping a history of backup files)\n* history_to_keep (Provide this if you want the resource to delete older files with the s3_file_prefix so that there are only :history_to_keep total in the bucket)\n\nNote that when you specify the s3_file_prefix and allow the resource to append a datetime string, there will be no file extension, so be sure you remember what it is.\n\n= USAGE:\n\n",
+  "long_description": "= DESCRIPTION:\n\n= REQUIREMENTS:\n\n= ATTRIBUTES:\n\n= USAGE:\n\n",
   "version": "0.0.1",
   "recommendations": {
   },
   "recipes": {
-    "rjg_aws::default": "Installs some ruby gems (right_aws) into the RightScale sandbox"
   },
   "groupings": {
   },
@@ -53,7 +52,7 @@
   },
   "replacing": {
   },
-  "description": "Installs/Configures aws",
+  "description": "Installs/Configures rs_ebs",
   "providing": {
   }
 }

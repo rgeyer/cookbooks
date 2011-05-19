@@ -10,6 +10,7 @@ depends "rs_sandbox"
 recipe "rjg_aws::default", "Installs some ruby gems (right_aws) into the RightScale sandbox"
 
 supports "ubuntu"
+supports "windows"
 
 attribute "aws/access_key_id",
   :display_name => "Access Key Id",
