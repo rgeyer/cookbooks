@@ -40,8 +40,6 @@ define :rs_ebs_attach_volume,
 
   volname = params[:volume_name] || "#{instance_id}_#{device}"
 
-  Chef::Log.info("device == #{device} && volname == #{volname}")
-
   include_recipe "rs_ebs::default"
 
   # Capture the "before" list of drives and volumes in windows, so we can wait for the new drive to be added,
@@ -49,9 +47,10 @@ define :rs_ebs_attach_volume,
   if node[:platform] == "windows"
     powershell "Get current disk and volume list" do
       ps_code = <<-EOF
-# Clear out existing mount information, this allows us to mount a snapshot to a drive letter other than the
-# one it was originally configured for on the same instance.  New instances will always get the specified
-# drive letter because they have no previous knowledge of the volume id
+# Clear out existing mount information, and disable automatic mounting. This allows us to mount a snapshot to a drive
+# letter other than the one it was originally configured for on the same instance.  New instances will always get the
+# specified drive letter because they have no previous knowledge of the volume id
+mountvol /N
 mountvol /R
 
 $drives = Get-WMIObject Win32_DiskDrive
@@ -180,9 +179,10 @@ assign letter $letter noerr
     }
     elseif ($volume_ids.count)
     {
-      $message = "Mounting existing volume "+$device_ids[0]+" - "+$volume_ids[0]+" to $letter"
+      $mountvolPath = $letter+":\"
+      $message = "Mounting existing volume "+$device_ids[0]+" - "+$volume_ids[0]+" to $mountvolPath"
       Write-Output $message
-      mountvol $letter $volume_ids[0]
+      mountvol $mountvolPath $volume_ids[0]
     }
   }
 }
