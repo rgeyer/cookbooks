@@ -89,7 +89,9 @@ Set-ChefNode rs_ebs_win32_volumes -ArrayValue $volume_ids
 $drive_list = Get-ChefNode rs_ebs_win32_disks
 $start_ts = [DateTime]::Now
 do
+{
   Start-Sleep -s 2
+}
 while (($drive_list.count -eq $drive_count) -and (([DateTime]::Now - $start_ts) -lt $env:TIMEOUT))
 if(([DateTime]::Now - $start_ts) -gt $env:TIMEOUT)
 {
