@@ -18,9 +18,8 @@ action :create do
     # instance in case a previous [:create, :attach] run created and attached a volume but for some reason was
     # not registered in the node data (e.g. an exception is thrown after the attach_volume request was accepted
     # by EC2, causing the node data to not be stored on the server)
-    device = determine_device
-    if device && (attached_volume = currently_attached_volume(instance_id, device))
-      Chef::Log.debug("There is already a volume attached at device #{device}")
+    if new_resource.device && (attached_volume = currently_attached_volume(instance_id, new_resource.device))
+      Chef::Log.debug("There is already a volume attached at device #{new_resource.device}")
       compatible = volume_compatible_with_resource_definition?(attached_volume)
       raise "Volume #{attached_volume[:aws_id]} attached at #{attached_volume[:aws_device]} but does not conform to this resource's specifications" unless compatible
       Chef::Log.debug("The volume matches the resource's definition, so the volume is assumed to be already created")
@@ -47,7 +46,7 @@ action :attach do
     end
   else
     # attach the volume and register its id in the node data
-    attach_volume(vol[:aws_id], instance_id, determine_device, new_resource.timeout)
+    attach_volume(vol[:aws_id], instance_id, new_resource.device, new_resource.timeout)
     node.set[:aws][:ebs_volume][new_resource.name][:volume_id] = vol[:aws_id]
     save_node()
     new_resource.updated_by_last_action(true) if new_resource.respond_to? 'updated_by_last_action'
@@ -102,18 +101,6 @@ end
 
 private
 
-def determine_device
-  device = new_resource.device
-  # If the device was not provided, we try to guess it
-  unless device
-    used_devices = ec2.describe_volumes(:filters => {'attachment.instance-id' => instance_id}).collect {|vol| vol[:aws_device] }
-    available_devices = node[:rjg_aws][:valid_ebs_devices] - used_devices
-    device = available_devices[0]
-  end
-
-  device
-end
-
 def volume_id_in_node_data
   begin
     node[:aws][:ebs_volume][new_resource.name][:volume_id]
@@ -124,7 +111,7 @@ end
 
 # Pulls the volume id from the volume_id attribute or the node data and verifies that the volume actually exists
 def determine_volume
-  vol_id = new_resource.volume_id || volume_id_in_node_data || currently_attached_volume(instance_id, determine_device)
+  vol_id = new_resource.volume_id || volume_id_in_node_data || currently_attached_volume(instance_id, new_resource.device)
   raise "volume_id attribute not set and no volume id is set in the node data for this resource (which is populated by action :create)" unless vol_id
 
   # check that volume exists
