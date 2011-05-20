@@ -49,6 +49,11 @@ define :rs_ebs_attach_volume,
   if node[:platform] == "windows"
     powershell "Get current disk and volume list" do
       ps_code = <<-EOF
+# Clear out existing mount information, this allows us to mount a snapshot to a drive letter other than the
+# one it was originally configured for on the same instance.  New instances will always get the specified
+# drive letter because they have no previous knowledge of the volume id
+mountvol /R
+
 $drives = Get-WMIObject Win32_DiskDrive
 $device_ids = @()
 foreach($drive in $drives)
