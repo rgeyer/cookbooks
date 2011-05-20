@@ -120,6 +120,9 @@ foreach($drive in $drives)
   }
 }
 
+Write-Output "Drive list before attach - $drive_list"
+Write-Output "New drives after attach - $device_ids"
+
 $volumes = Get-WMIObject Win32_Volume
 $volume_ids = @()
 foreach($volume in $volumes)
@@ -129,6 +132,9 @@ foreach($volume in $volumes)
     $volume_ids += $volume.DeviceID
   }
 }
+
+Write-Output "Volume list before attach - $volume_list"
+Write-Output "New volumes after attach - $volume_ids"
 
 $letters = 68..89 | ForEach-Object { ([char]$_)+":" }
 $freeletters = $letters | Where-Object {
@@ -141,26 +147,38 @@ if (!$letter)
   $letter = $freeletters[0]
 }
 
-if(($drives.count -gt $drive_list.count) -and ($volumes.count -gt $volume_list.count))
+if($device_ids.count)
 {
   $filter = 'DeviceID="'+$device_ids[0].replace("\", "\\")+'"'
   $drive = Get-WMIObject Win32_DiskDrive -filter $filter
   $script = $Null
 
-  if (($drive) -and ($drive.Partitions -eq "0")) {
-    $drivenumber = $drive.DeviceID -replace '[\\\\\.\\physicaldrive]',''
-    $script = @"
+  if ($drive) {
+    Write-Output "New Drive ($device_ids[0]) detected."
+    # Drive has no partitions, this is a new blank EBS vol
+    if($drive.Partitions -eq "0")
+    {
+      $drivenumber = $drive.DeviceID -replace '[\\\\\.\\physicaldrive]',''
+      $script = @"
 select disk $drivenumber
 online disk noerr
 attributes disk clear readonly noerr
 create partition primary noerr
 format quick
+assign letter $letter noerr
 "@
 
-    $script | diskpart
+      Write-Output "Running diskpart with the following script"
+      Write-Output $script
+      $script | diskpart
+    }
+    elseif ($volume_ids.count)
+    {
+      $message = "Mounting existing volume "+$device_ids[0]+" - "+$volume_ids[0]+" to $letter"
+      Write-Output $message
+      mountvol $letter $volume_ids[0]
+    }
   }
-
-  mountvol $freeletters[0] $volume_ids[0]
 }
       EOF
       source(ps_code)
