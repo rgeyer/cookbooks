@@ -91,8 +91,9 @@ $start_ts = [DateTime]::Now
 do
 {
   Start-Sleep -s 2
+  $drives = Get-WMIObject Win32_DiskDrive
 }
-while (($drive_list.count -eq $drive_count) -and (([DateTime]::Now - $start_ts) -lt $env:TIMEOUT))
+while (($drive_list.count -eq $drives.count) -and (([DateTime]::Now - $start_ts) -lt $env:TIMEOUT))
 if(([DateTime]::Now - $start_ts) -gt $env:TIMEOUT)
 {
   Write-Error "Timeout of $env:TIMEOUT seconds reached while waiting for volume attachment"
