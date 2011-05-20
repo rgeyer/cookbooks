@@ -20,20 +20,20 @@ define :rs_ebs_attach_volume,
     :snapshot_id => nil,
     :mountpoint => nil,
     :timeout => 300 do
+  # TODO: Tag the device with some lineage and what not
 
   require 'rubygems'
   require 'right_aws'
-  # TODO: Tag the device with some lineage and what not
 
   ec2 = RightAws::Ec2.new(params[:aws_access_key_id], params[:aws_secret_access_key], { :logger => Chef::Log })
   instance_id = node[:ec2][:instance_id]
 
-  Chef::Log.info("Entered rs_ebs_attach_volume, and the instance id is #{instance_id}.  Haven't gotten to the device yet")
-
   device = params[:device]
   # If the device was not provided, we try to guess it
+  # Also, note that this is dependent upon Right_AWS <= 2.0 later versions change the signature of the describe_volumes method.
   unless device
-    used_devices = ec2.describe_volumes(:filters => {'attachment.instance-id' => instance_id}).collect {|vol| vol[:aws_device] }
+    devices_for_instance = ec2.describe_volumes.select{|vol| vol[:aws_instance_id] == instance_id}
+    used_devices = devices_for_instance.collect {|vol| vol[:aws_device] }
     available_devices = node[:rs_ebs][:valid_ebs_devices] - used_devices
     device = available_devices[0]
   end
