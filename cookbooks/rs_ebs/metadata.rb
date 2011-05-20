@@ -10,6 +10,9 @@ depends "rjg_aws"
 supports "ubuntu"
 supports "windows"
 
+recipe "rs_ebs::default", "Installs some system packages required by rs_ebs"
+recipe "rs_ebs::attach_volume", "Attaches a blank volume, or a volume from a snapshot, depending on input"
+
 attribute "aws/access_key_id",
   :display_name => "Access Key Id",
   :description => "This is an Amazon credential. Log in to your AWS account at aws.amazon.com to retrieve you access identifiers. Ex: 1JHQQ4KVEVM02KVEVM02",

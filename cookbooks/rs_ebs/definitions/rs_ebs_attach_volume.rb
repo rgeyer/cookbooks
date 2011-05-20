@@ -21,6 +21,8 @@ define :rs_ebs_attach_volume,
     :mountpoint => nil,
     :timeout => 300 do
 
+  # TODO: Tag the device with some lineage and what not
+
   ec2 = RightAws::Ec2.new(params[:aws_access_key_id], params[:aws_secret_access_key], { :logger => Chef::Log })
   instance_id = node[:ec2][:instance_id]
 

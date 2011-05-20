@@ -17,6 +17,8 @@
 # limitations under the License.
 #
 
+include_recipe "rs_ebs::default"
+
 rs_ebs_attach_volume "Attach the specified EBS volume" do
   volume_name node[:rs_ebs][:volume_name]
   aws_access_key_id node[:aws][:access_key_id]

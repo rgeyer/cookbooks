@@ -5,6 +5,19 @@
   "name": "rs_ebs",
   "maintainer_email": "me@ryangeyer.com",
   "attributes": {
+    "rs_ebs/snapshot_id": {
+      "required": "optional",
+      "calculated": false,
+      "choice": [
+
+      ],
+      "type": "string",
+      "recipes": [
+        "rs_ebs::attach_volume"
+      ],
+      "display_name": "RS_EBS Volume Snapshot Id",
+      "description": "The full AWS id of a snapshot which will be used to create the volume.  This is used to launch a new server instance with the state stored in the specified snapshot.  If left blank a new EBS volume is created."
+    },
     "aws/secret_access_key": {
       "required": "required",
       "calculated": false,
@@ -30,6 +43,58 @@
       ],
       "display_name": "Access Key Id",
       "description": "This is an Amazon credential. Log in to your AWS account at aws.amazon.com to retrieve you access identifiers. Ex: 1JHQQ4KVEVM02KVEVM02"
+    },
+    "rs_ebs/vol_size_in_gb": {
+      "required": "required",
+      "calculated": false,
+      "choice": [
+
+      ],
+      "type": "string",
+      "recipes": [
+        "rs_ebs::attach_volume"
+      ],
+      "display_name": "RS_EBS Volume Size in GB",
+      "description": "The desired volume size, measured in GB"
+    },
+    "rs_ebs/mountpoint": {
+      "required": "required",
+      "calculated": false,
+      "choice": [
+
+      ],
+      "type": "string",
+      "recipes": [
+        "rs_ebs::attach_volume"
+      ],
+      "display_name": "RS_EBS Volume Mountpoint",
+      "description": "The path where the new EBS volume will be mounted. For windows this is simply a drive letter designation, on linux any path is acceptable."
+    },
+    "rs_ebs/volume_name": {
+      "required": "optional",
+      "calculated": false,
+      "choice": [
+
+      ],
+      "type": "string",
+      "recipes": [
+        "rs_ebs::attach_volume"
+      ],
+      "display_name": "RS_EBS Volume Name",
+      "description": "A unique volume name.  If no name is supplied the volume name will be <ec2-instance-id>_<device>"
+    },
+    "rs_ebs/device": {
+      "required": "optional",
+      "calculated": false,
+      "choice": [
+
+      ],
+      "type": "string",
+      "recipes": [
+        "rs_ebs::attach_volume"
+      ],
+      "display_name": "RS_EBS Volume Device",
+      "description": "The desired device for the new EBS volume.  On Windows this is xvd[b-p], on linux this is /dev/sd[a-p][1-15].  If no device is supplied, the next available one will be automatically chosen"
     }
   },
   "license": "All rights reserved",
@@ -45,6 +110,8 @@
   "recommendations": {
   },
   "recipes": {
+    "rs_ebs::default": "Installs some system packages required by rs_ebs",
+    "rs_ebs::attach_volume": "Attaches a blank volume, or a volume from a snapshot, depending on input"
   },
   "groupings": {
   },
