@@ -65,9 +65,8 @@ foreach($volume in $volumes)
 }
 Set-ChefNode rs_ebs_win32_volumes -ArrayValue $volume_ids
       EOF
+      source(ps_code)
     end
-
-    source(ps_code)
   end
 
   rjg_aws_ebs_volume volname do
