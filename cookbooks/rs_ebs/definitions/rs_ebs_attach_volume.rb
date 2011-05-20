@@ -107,7 +107,7 @@ if(([DateTime]::Now - $start_ts) -gt $env:TIMEOUT)
       parameters({"MOUNTPOINT" => params[:mountpoint]})
       # TODO: Don't format the drive if it's already formatted, as in the
       # case of attaching a snapshot
-      ps_code = <<-EOF
+      ps_code = <<'EOF'
 $drive_list = Get-ChefNode rs_ebs_win32_disks
 $volume_list = Get-ChefNode rs_ebs_win32_volumes
 
@@ -181,7 +181,7 @@ assign letter $letter noerr
     }
   }
 }
-      EOF
+EOF
       source(ps_code)
     end
   else
