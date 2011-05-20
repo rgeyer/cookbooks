@@ -108,7 +108,7 @@ if(([DateTime]::Now - $start_ts) -gt $env:TIMEOUT)
       # case of attaching a snapshot
       ps_code = <<-EOF
 $drive_list = Get-ChefNode rs_ebs_win32_disks
-$volume_list = Get-ChefNoe rs_ebs_win32_volumes
+$volume_list = Get-ChefNode rs_ebs_win32_volumes
 
 $drives = Get-WMIObject Win32_DiskDrive
 $device_ids = @()
