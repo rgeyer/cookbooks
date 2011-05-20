@@ -141,7 +141,7 @@ if (!$letter)
   $letter = $freeletters[0]
 }
 
-if(($drive.count -gt $drive_list.count) -and ($volumes.count -gt $volume_list.count))
+if(($drives.count -gt $drive_list.count) -and ($volumes.count -gt $volume_list.count))
 {
   $filter = 'DeviceID="'+$device_ids[0].replace("\", "\\")+'"'
   $drive = Get-WMIObject Win32_DiskDrive -filter $filter
