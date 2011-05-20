@@ -11,8 +11,6 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-# TODO: indempotency for windows
-
 define :rs_ebs_attach_volume,
     :volume_name => nil,
     :aws_access_key_id => nil,
@@ -22,6 +20,19 @@ define :rs_ebs_attach_volume,
     :snapshot_id => nil,
     :mountpoint => nil,
     :timeout => 300 do
+
+  ec2 = RightAws::Ec2.new(params[:aws_access_key_id], params[:aws_secret_access_key], { :logger => Chef::Log })
+  instance_id = node[:ec2][:instance_id]
+
+  device = params[:device]
+  # If the device was not provided, we try to guess it
+  unless device
+    used_devices = ec2.describe_volumes(:filters => {'attachment.instance-id' => instance_id}).collect {|vol| vol[:aws_device] }
+    available_devices = node[:rs_ebs][:valid_ebs_devices] - used_devices
+    device = available_devices[0]
+  end
+
+  volname = params[:volume_name] || "#{instance_id}_#{device}"
 
   include_recipe "rs_ebs::default"
 
@@ -54,7 +65,7 @@ Set-ChefNode rs_ebs_win32_volumes -ArrayValue $volume_ids
   rjg_aws_ebs_volume params[:volume_name] do
     aws_access_key params[:aws_access_key_id]
     aws_secret_access_key params[:aws_secret_access_key]
-    device params[:device]
+    device device
     size params[:vol_size_in_gb].to_i
     if params[:snapshot_id]
       snapshot_id params[:snapshot_id]
@@ -65,14 +76,18 @@ Set-ChefNode rs_ebs_win32_volumes -ArrayValue $volume_ids
   if node[:platform] == "windows"
     # TODO: This is a total hack, but if I don't do it, mounting later fails when I'm attaching
     # a new volume from a snapshot.  Probably a symptom of another problem but this seems to fix it.
-    powershell "Wait for #{params[:device]}" do
+    powershell "Wait for #{device}" do
       parameters({'TIMEOUT' => params[:timeout]})
       ps_code = <<-EOF
-      $drive_list = Get-ChefNode rs_ebs_win32_disks
-      $start_ts = [DateTime]::Now
-      do
-        Start-Sleep -s 2
-      while (($drive_list.count -eq $drive_count) -and (([DateTime]::Now - $start_ts) -lt $env:TIMEOUT))
+$drive_list = Get-ChefNode rs_ebs_win32_disks
+$start_ts = [DateTime]::Now
+do
+  Start-Sleep -s 2
+while (($drive_list.count -eq $drive_count) -and (([DateTime]::Now - $start_ts) -lt $env:TIMEOUT))
+if(([DateTime]::Now - $start_ts) -gt $env:TIMEOUT)
+{
+  Write-Error "Timeout of $env:TIMEOUT seconds reached while waiting for volume attachment"
+}
       EOF
 
       source(ps_code)
@@ -80,7 +95,8 @@ Set-ChefNode rs_ebs_win32_volumes -ArrayValue $volume_ids
 
     powershell "Online, initialize, and format the drive" do
       parameters({"MOUNTPOINT" => params[:mountpoint]})
-
+      # TODO: Don't format the drive if it's already formatted, as in the
+      # case of attaching a snapshot
       ps_code = <<-EOF
 $drive_list = Get-ChefNode rs_ebs_win32_disks
 $volume_list = Get-ChefNoe rs_ebs_win32_volumes
@@ -116,13 +132,15 @@ if (!$letter)
   $letter = $freeletters[0]
 }
 
-$filter = 'DeviceID="'+$device_ids[0].replace("\", "\\")+'"'
-$drive = Get-WMIObject Win32_DiskDrive -filter $filter
-$script = $Null
+if(($drive.count -gt $drive_list.count) -and ($volumes.count -gt $volume_list.count))
+{
+  $filter = 'DeviceID="'+$device_ids[0].replace("\", "\\")+'"'
+  $drive = Get-WMIObject Win32_DiskDrive -filter $filter
+  $script = $Null
 
-if (($drive) -and ($drive.Partitions -eq "0")) {
-  $drivenumber = $drive.DeviceID -replace '[\\\\\.\\physicaldrive]',''
-  $script = @"
+  if (($drive) -and ($drive.Partitions -eq "0")) {
+    $drivenumber = $drive.DeviceID -replace '[\\\\\.\\physicaldrive]',''
+    $script = @"
 select disk $drivenumber
 online disk noerr
 attributes disk clear readonly noerr
@@ -130,36 +148,46 @@ create partition primary noerr
 format quick
 "@
 
-  $script | diskpart
-}
+    $script | diskpart
+  }
 
-mountvol $freeletters[0] $volume_ids[0]
+  mountvol $freeletters[0] $volume_ids[0]
+}
       EOF
       source(ps_code)
     end
   else
     # TODO: This is a total hack, but if I don't do it, mounting later fails when I'm attaching
     # a new volume from a snapshot.  Probably a symptom of another problem but this seems to fix it.
-    ruby_block "Wait for #{params[:device]}" do
+    ruby_block "Wait for #{device}" do
       block do
         start_ts = Time.now.to_i
         while !::File.exist?('/dev/sdi') && (Time.now.to_i - start_ts) < params[:timeout] do
           sleep(2)
         end
+        if (Time.now.to_i - start_ts) > params[:timeout]
+          raise "Timeout of #{params[:timeout]} seconds reached while waiting for volume attachment"
+        end
       end
     end
 
-    bash "Format #{params[:device]} with XFS" do
+    bash "Format #{device} with XFS" do
       user "root"
       code <<-EOF
     grep -q xfs /proc/filesystems || modprobe xfs
-    mkfs.xfs -q #{params[:device]}
+    mkfs.xfs -q #{device}
       EOF
       not_if do
         params[:snapshot_id] or
-        `file -s #{params[:device]} | grep XFS`.strip =~ /XFS/
+        `file -s #{device} | grep XFS`.strip =~ /XFS/
       end
     end
-  end
 
+    mount params[:mountpoint] do
+      device device
+      fstype "xfs"
+      action [:mount, :enable]
+    end
+
+  end
 end

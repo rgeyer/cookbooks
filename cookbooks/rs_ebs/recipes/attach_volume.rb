@@ -17,3 +17,12 @@
 # limitations under the License.
 #
 
+rs_ebs_attach_volume "Attach the specified EBS volume" do
+  volume_name node[:rs_ebs][:volume_name]
+  aws_access_key_id node[:aws][:access_key_id]
+  aws_secret_access_key node[:aws][:secret_access_key]
+  device node[:rs_ebs][:device]
+  vol_size_in_gb node[:rs_ebs][:vol_size_in_gb]
+  snapshot_id node[:rs_ebs][:snapshot_id]
+  mountpoint node[:rs_ebs][:mountpoint]
+end

@@ -16,7 +16,7 @@ if node[:platform] == "windows"
   ("b".."p").each do |letter|
     device_list_ary << "xvd#{letter}"
   end
-  default[:rjg_aws][:valid_ebs_devices] = device_list_ary
+  default[:rs_ebs][:valid_ebs_devices] = device_list_ary
 else
   device_list_ary = []
   ("a".."p").each do |letter|
@@ -24,5 +24,5 @@ else
       device_list_ary << "/dev/sd#{letter}#{number}"
     end
   end
-  default[:rjg_aws][:valid_ebs_devices] = device_list_ary
+  default[:rs_ebs][:valid_ebs_devices] = device_list_ary
 end
