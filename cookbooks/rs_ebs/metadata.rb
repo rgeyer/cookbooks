@@ -27,7 +27,7 @@ attribute "aws/secret_access_key",
 
 attribute "rs_ebs/volume_name",
   :display_name => "RS_EBS Volume Name",
-  :description => "A unique volume name.  If no name is supplied the volume name will be <ec2-instance-id>_<device>",
+  :description => "A unique volume name.  If no name is supplied the volume name will be [ec2-instance-id]_[device]",
   :recipes => ["rs_ebs::attach_volume"],
   :required => "optional"
 

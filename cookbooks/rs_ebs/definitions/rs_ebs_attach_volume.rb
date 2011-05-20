@@ -26,6 +26,8 @@ define :rs_ebs_attach_volume,
   ec2 = RightAws::Ec2.new(params[:aws_access_key_id], params[:aws_secret_access_key], { :logger => Chef::Log })
   instance_id = node[:ec2][:instance_id]
 
+  Chef::Log.info("Entered rs_ebs_attach_volume, and the instance id is #{instance_id}.  Haven't gotten to the device yet")
+
   device = params[:device]
   # If the device was not provided, we try to guess it
   unless device
@@ -35,6 +37,8 @@ define :rs_ebs_attach_volume,
   end
 
   volname = params[:volume_name] || "#{instance_id}_#{device}"
+
+  Chef::Log.info("device == #{device} && volname == #{volname}")
 
   include_recipe "rs_ebs::default"
 
@@ -64,7 +68,7 @@ Set-ChefNode rs_ebs_win32_volumes -ArrayValue $volume_ids
     source(ps_code)
   end
 
-  rjg_aws_ebs_volume params[:volume_name] do
+  rjg_aws_ebs_volume volname do
     aws_access_key params[:aws_access_key_id]
     aws_secret_access_key params[:aws_secret_access_key]
     device device
