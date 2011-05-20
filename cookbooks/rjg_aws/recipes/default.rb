@@ -14,7 +14,7 @@ include_recipe "rs_sandbox::default"
 gem_name = "right_aws"
 gem_version = "2.0.0"
 
-if ::File.exists? node[:rs_sandbox][:gem_bin]
+if ::File.directory? node[:rs_sandbox][:home]
   load_ruby_gem_into_rs_sandbox(gem_name, gem_version, nil, true)
 end
 
