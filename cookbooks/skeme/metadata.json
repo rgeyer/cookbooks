@@ -26,11 +26,9 @@
   },
   "description": "Installs/Configures skeme",
   "providing": {
-    "skeme_tag_snapshot[add]": ">= 0.0.0",
     "skeme_tag_volume[add]": ">= 0.0.0",
-    "skeme_tag_server[add]": ">= 0.0.0",
-    "skeme_tag_server[delete]": ">= 0.0.0",
-    "skeme_tag_snapshot[delete]": ">= 0.0.0",
+    "skeme_tag[delete]": ">= 0.0.0",
+    "skeme_tag[add]": ">= 0.0.0",
     "skeme_tag_volume[delete]": ">= 0.0.0"
   }
 }

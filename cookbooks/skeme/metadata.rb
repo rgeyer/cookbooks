@@ -7,11 +7,11 @@ version          "0.0.3"
 
 depends "rjg_aws"
 
-provides "skeme_tag_server[add]"
-provides "skeme_tag_server[delete]"
+provides "skeme_tag[add]"
+provides "skeme_tag[delete]"
 
 provides "skeme_tag_volume[add]"
 provides "skeme_tag_volume[delete]"
 
-provides "skeme_tag_snapshot[add]"
-provides "skeme_tag_snapshot[delete]"
+#provides "skeme_tag_snapshot[add]"
+#provides "skeme_tag_snapshot[delete]"
