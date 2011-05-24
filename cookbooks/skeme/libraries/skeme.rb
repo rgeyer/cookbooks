@@ -40,7 +40,7 @@ module Rgeyer
                 "X_API_VERSION" => "1.0"
               }
             }
-          @@logger ||= Logger.new(Chef::Log)
+          @@logger ||= Logger.new(::Chef::Log)
           EOF
           RightScale::Api::Base.class_eval <<-EOF
           @@connection ||= RestConnection::Connection.new
@@ -52,7 +52,7 @@ module Rgeyer
                 "X_API_VERSION" => "1.0"
               }
             }
-          @@logger ||= Logger.new(Chef::Log)
+          @@logger ||= Logger.new(::Chef::Log)
           EOF
           begin
             yield
