@@ -87,7 +87,7 @@ module Rgeyer
             Tag.set(server.current_instance_href, [rs_tag])
           }
           if !rest_tag_retval
-            Chef::Log.info("Not running on a RightScale server, and no RightScale API credentials were supplied. Skipping RightScale tag.")
+            ::Chef::Log.info("Not running on a RightScale server, and no RightScale API credentials were supplied. Skipping RightScale tag.")
           end
         end
 
@@ -98,9 +98,9 @@ module Rgeyer
             ec2.delete_tags(instance_id, ec2_tag)
           end
         elsif !new_resource.aws_access_key || !new_resource.aws_secret_access_key
-          Chef::Log.info("Running on an Amazon EC2 instance, but no AWS credentials were provided, skipping EC2 tag.")
+          ::Chef::Log.info("Running on an Amazon EC2 instance, but no AWS credentials were provided, skipping EC2 tag.")
         else
-          Chef::Log.info("Not running on an Amazon EC2 instance, skipping EC2 tag.")
+          ::Chef::Log.info("Not running on an Amazon EC2 instance, skipping EC2 tag.")
         end
 
         # TODO: Consider a mechanism that will work even in RightScale and Chef-Solo
@@ -115,7 +115,7 @@ module Rgeyer
             end
           end
         else
-          Chef::Log.info("Chef version is older than 0.10.0, skipping Chef tag")
+          ::Chef::Log.info("Chef version is older than 0.10.0, skipping Chef tag")
         end
       end
     end
