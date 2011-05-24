@@ -14,10 +14,12 @@
 include Opscode::Aws::Ec2
 include Rgeyer::Chef::Skeme
 
+require 'socket'
+
 action :add do
   rest_tag_retval = run_rest_connection {
     instance = Tag.search('ec2_instance', ["ipv4:private=#{IPSocket.getaddress(Socket.gethostname)}"])
     server = Server.find(:first) { |s| instance["href"].start_with? s.href }
-    Tag.set(server.current_instance_href, rs_tag)
+    Tag.set(server.current_instance_href, ["foo:bar=baz"])
   }
 end

@@ -32,7 +32,7 @@ def tag(action)
     rest_tag_retval = run_rest_connection {
       instance = Tag.search('ec2_instance', ["ipv4:private=#{IPSocket.getaddress(Socket.gethostname)}"])
       server = Server.find(:first) { |s| instance["href"].start_with? s.href }
-      Tag.set(server.current_instance_href, rs_tag)
+      Tag.set(server.current_instance_href, [rs_tag])
     }
     if !rest_tag_retval
       Chef::Log.info("Not running on a RightScale server, and no RightScale API credentials were supplied. Skipping RightScale tag.")
