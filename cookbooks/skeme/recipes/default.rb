@@ -14,3 +14,6 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
+
+include_recipe "utils::install_rest_connection_gem"
+include_recipe "rjg_aws::default"

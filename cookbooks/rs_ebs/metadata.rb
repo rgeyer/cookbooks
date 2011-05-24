@@ -12,29 +12,30 @@ supports "windows"
 
 recipe "rs_ebs::default", "Installs some system packages required by rs_ebs"
 recipe "rs_ebs::attach_volume", "Attaches a blank volume, or a volume from a snapshot, depending on input"
+recipe "rs_ebs::snapshot_volume", "Snapshots the specified volume, pruning old snapshots from the same lineage"
 
 attribute "aws/access_key_id",
   :display_name => "Access Key Id",
   :description => "This is an Amazon credential. Log in to your AWS account at aws.amazon.com to retrieve you access identifiers. Ex: 1JHQQ4KVEVM02KVEVM02",
-  :recipes => ["rs_ebs::attach_volume"],
+  :recipes => ["rs_ebs::attach_volume","rs_ebs::snapshot_volume"],
   :required => "required"
 
 attribute "aws/secret_access_key",
   :display_name => "Secret Access Key",
   :description => "This is an Amazon credential. Log in to your AWS account at aws.amazon.com to retrieve your access identifiers. Ex: XVdxPgOM4auGcMlPz61IZGotpr9LzzI07tT8s2Ws",
-  :recipes => ["rs_ebs::attach_volume"],
+  :recipes => ["rs_ebs::attach_volume","rs_ebs::snapshot_volume"],
   :required => "required"
 
 attribute "rs_ebs/volume_name",
   :display_name => "RS_EBS Volume Name",
   :description => "A unique volume name.  If no name is supplied the volume name will be [ec2-instance-id]_[device]",
-  :recipes => ["rs_ebs::attach_volume"],
+  :recipes => ["rs_ebs::attach_volume","rs_ebs::snapshot_volume"],
   :required => "optional"
 
 attribute "rs_ebs/device",
   :display_name => "RS_EBS Volume Device",
   :description => "The desired device for the new EBS volume.  On Windows this is xvd[b-p], on linux this is /dev/sd[a-p][1-15].  If no device is supplied, the next available one will be automatically chosen",
-  :recipes => ["rs_ebs::attach_volume"],
+  :recipes => ["rs_ebs::attach_volume","rs_ebs::snapshot_volume"],
   :required => "optional"
 
 attribute "rs_ebs/vol_size_in_gb",
@@ -54,3 +55,21 @@ attribute "rs_ebs/mountpoint",
   :description => "The path where the new EBS volume will be mounted. For windows this is simply a drive letter designation, on linux any path is acceptable.",
   :recipes => ["rs_ebs::attach_volume"],
   :required => "required"
+
+attribute "rs_ebs/rs_email",
+  :display_name => "RS_EBS RightScale Account Email",
+  :description => "The email address of a RightScale user who has permissions to tag instances, volumes, and snapshots",
+  :recipes => ["rs_ebs::snapshot_volume"],
+  :required => "optional"
+
+attribute "rs_ebs/rs_pass",
+  :display_name => "RS_EBS RightScale Account Password",
+  :description => "The password of a RightScale user who has permissions to tag instances, volumes, and snapshots",
+  :recipes => ["rs_ebs::snapshot_volume"],
+  :required => "optional"
+
+attribute "rs_ebs/rs_acct_num",
+  :display_name => "RS_EBS RightScale Account Number",
+  :description => "The RightScale account number",
+  :recipes => ["rs_ebs::snapshot_volume"],
+  :required => "optional"
