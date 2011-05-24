@@ -57,8 +57,8 @@ module Rgeyer
           begin
             yield
           rescue Exception => e
-            puts e.message
-            puts e.backtrace.inspect
+            ::Chef::Log.warn(e.message)
+            ::Chef::Log.warn(e.backtrace.inspect)
             return false
           end
         else
