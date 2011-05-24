@@ -32,6 +32,12 @@ attribute "rs_ebs/volume_name",
   :recipes => ["rs_ebs::attach_volume","rs_ebs::snapshot_volume"],
   :required => "optional"
 
+attribute "rs_ebs/lineage",
+  :display_name => "RS_EBS Lineage",
+  :description => "A name which uniquely identifies this EBS volume and all of it's snapshots.  The name must be unique within an AWS account!",
+  :recipes => ["rs_ebs::attach_volume","rs_ebs::snapshot_volume"],
+  :required => "required"
+
 attribute "rs_ebs/device",
   :display_name => "RS_EBS Volume Device",
   :description => "The desired device for the new EBS volume.  On Windows this is xvd[b-p], on linux this is /dev/sd[a-p][1-15].  If no device is supplied, the next available one will be automatically chosen",
@@ -59,17 +65,17 @@ attribute "rs_ebs/mountpoint",
 attribute "rs_ebs/rs_email",
   :display_name => "RS_EBS RightScale Account Email",
   :description => "The email address of a RightScale user who has permissions to tag instances, volumes, and snapshots",
-  :recipes => ["rs_ebs::snapshot_volume"],
+  :recipes => ["rs_ebs::snapshot_volume","rs_ebs::attach_volume"],
   :required => "optional"
 
 attribute "rs_ebs/rs_pass",
   :display_name => "RS_EBS RightScale Account Password",
   :description => "The password of a RightScale user who has permissions to tag instances, volumes, and snapshots",
-  :recipes => ["rs_ebs::snapshot_volume"],
+  :recipes => ["rs_ebs::snapshot_volume","rs_ebs::attach_volume"],
   :required => "optional"
 
 attribute "rs_ebs/rs_acct_num",
   :display_name => "RS_EBS RightScale Account Number",
   :description => "The RightScale account number",
-  :recipes => ["rs_ebs::snapshot_volume"],
+  :recipes => ["rs_ebs::snapshot_volume","rs_ebs::attach_volume"],
   :required => "optional"

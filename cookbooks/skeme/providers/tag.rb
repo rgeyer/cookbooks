@@ -15,9 +15,9 @@ include Opscode::Aws::Ec2
 include Rgeyer::Chef::Skeme
 
 action :add do
-  tag("add")
+  tag_it("add")
 end
 
 action :delete do
-  tag("delete")
+  tag_it("delete")
 end

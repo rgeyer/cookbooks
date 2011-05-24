@@ -13,8 +13,12 @@
 
 define :rs_ebs_attach_volume,
     :volume_name => nil,
+    :lineage => nil,
     :aws_access_key_id => nil,
     :aws_secret_access_key => nil,
+    :rs_email => nil,
+    :rs_pass => nil,
+    :rs_acct_num => nil,
     :device => nil,
     :vol_size_in_gb => nil,
     :snapshot_id => nil,
@@ -82,6 +86,16 @@ Set-ChefNode rs_ebs_win32_volumes -ArrayValue $volume_ids
       snapshot_id params[:snapshot_id]
     end
     action [:create, :attach]
+  end
+
+  skeme_tag_volume "rs_ebs:lineage=#{params[:lineage]}" do
+    aws_access_key params[:aws_access_key_id]
+    aws_secret_access_key params[:aws_secret_access_key]
+    rs_email params[:rs_email]
+    rs_pass params[:rs_pass]
+    rs_acct_num params[:rs_acct_num]
+    volume_id { node[:aws][:ebs_volume][volname][:volume_id] }
+    action :add
   end
 
   if node[:platform] == "windows"

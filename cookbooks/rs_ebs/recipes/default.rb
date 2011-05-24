@@ -18,6 +18,7 @@
 #
 
 include_recipe "rjg_aws::default"
+include_recipe "skeme::default"
 
 if node[:platform] == "ubuntu"
   package "xfsprogs"
