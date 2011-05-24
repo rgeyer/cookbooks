@@ -21,7 +21,7 @@ include_recipe "rs_ebs::default"
 include_recipe "skeme::default"
 
 skeme_tag_volume "foo:bar=baz" do
-  aws_access_key_id node[:aws][:access_key_id]
+  aws_access_key node[:aws][:access_key_id]
   aws_secret_access_key node[:aws][:secret_access_key]
   rs_email node[:rs_ebs][:rs_email]
   rs_pass node[:rs_ebs][:rs_pass]
