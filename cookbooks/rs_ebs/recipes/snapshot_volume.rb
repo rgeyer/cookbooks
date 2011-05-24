@@ -20,11 +20,14 @@
 include_recipe "rs_ebs::default"
 include_recipe "skeme::default"
 
+Chef::Log.info("Running rs_ebs::snapshot_volume")
+
 skeme_tag_volume "foo:bar=baz" do
   aws_access_key node[:aws][:access_key_id]
   aws_secret_access_key node[:aws][:secret_access_key]
   rs_email node[:rs_ebs][:rs_email]
   rs_pass node[:rs_ebs][:rs_pass]
   rs_acct_num node[:rs_ebs][:rs_acct_num]
+  volume_id "volid"
   action :add
 end
