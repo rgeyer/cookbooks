@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: rs_ebs
-# Recipe:: default
+# Recipe:: attach_volume
 #
 # Copyright 2010, Ryan J. Geyer
 #
