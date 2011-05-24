@@ -11,12 +11,13 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-actions [:add, :delete]
+include Opscode::Aws::Ec2
+include Rgeyer::Chef::Skeme
 
-attribute :tag, :kind_of => [String], :required => true, :name_attribute => true
-attribute :ec2_tag, :kind_of => [String]
-attribute :rs_tag, :kind_of => [String]
-attribute :chef_tag, :kind_of => [String]
-
-attribute :aws_access_key, :kind_of => [String]
-attribute :aws_secret_access_key, :kind_of => [String]
+action :add do
+  rest_tag_retval = run_rest_connection {
+    instance = Tag.search('ec2_instance', ["ipv4:private=#{IPSocket.getaddress(Socket.gethostname)}"])
+    server = Server.find(:first) { |s| instance["href"].start_with? s.href }
+    Tag.set(server.current_instance_href, rs_tag)
+  }
+end

@@ -12,13 +12,9 @@
 #  limitations under the License.
 
 include Opscode::Aws::Ec2
+include Rgeyer::Chef::Skeme
 
-def right_link_tag_exists?
-  klass = Module.const_get("Chef::Provider::RightLinkTag")
-  return klass.is_a?(Class)
-rescue NameError
-  return false
-end
+require 'socket'
 
 def tag(action)
   tag       = new_resource.name
@@ -33,7 +29,14 @@ def tag(action)
   elsif `which rs_tag`
     `#{rs_cli}`
   else
-    Chef::Log.info("Not running on a RightScale server, skipping RightScale tag.")
+    rest_tag_retval = run_rest_connection {
+      instance = Tag.search('ec2_instance', ["ipv4:private=#{IPSocket.getaddress(Socket.gethostname)}"])
+      server = Server.find(:first) { |s| instance["href"].start_with? s.href }
+      Tag.set(server.current_instance_href, rs_tag)
+    }
+    if !rest_tag_retval
+      Chef::Log.info("Not running on a RightScale server, and no RightScale API credentials were supplied. Skipping RightScale tag.")
+    end
   end
 
   if node[:ec2] && new_resource.aws_access_key && new_resource.aws_secret_access_key
