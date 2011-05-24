@@ -17,7 +17,9 @@ include Rgeyer::Chef::Skeme
 require 'socket'
 
 action :add do
+  ::Chef::Log.info("We're in tag_volume add action")
   rest_tag_retval = run_rest_connection {
+    ::Chef::Log.info("We're in the run_rest_connection block which ought to be yielded.")
     instance = Tag.search('ec2_instance', ["ipv4:private=#{IPSocket.getaddress(Socket.gethostname)}"])
     server = Server.find(:first) { |s| instance["href"].start_with? s.href }
     Tag.set(server.current_instance_href, ["foo:bar=baz"])
