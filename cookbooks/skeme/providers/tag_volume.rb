@@ -20,11 +20,8 @@ require 'yaml'
 action :add do
   ::Chef::Log.info("We're in tag_volume add action")
   rest_tag_retval = run_rest_connection {
-    ::Chef::Log.info("We're in the run_rest_connection block which ought to be yielded.")
-    instance = Tag.search('ec2_instance', ["ipv4:private=#{IPSocket.getaddress(Socket.gethostname)}"])
-    ::Chef::Log.info instance.to_yaml
+    instance = Tag.search('ec2_instance', ["ipv4:private=#{IPSocket.getaddress(Socket.gethostname)}"]).first()
     server = Server.find(:first) { |s| instance["href"].start_with? s.href }
-    ::Chef::Log.info server.to_yaml
     Tag.set(server.current_instance_href, ["foo:bar=baz"])
   }
 end
