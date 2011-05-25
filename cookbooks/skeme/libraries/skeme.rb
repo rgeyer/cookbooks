@@ -90,7 +90,11 @@ module Rgeyer
         rs_cli = adding ? "rs_tag -a #{rs_tag}" : "rs_tag -r #{rs_tag}"
         if right_link_tag_exists?
           right_link_tag rs_tag do
-            action adding ? :publish : :remove
+            if adding
+              action :publish
+            else
+              action :remove
+            end
           end
         elsif `which rs_tag`
           `#{rs_cli}`
