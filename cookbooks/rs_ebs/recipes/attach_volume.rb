@@ -21,6 +21,7 @@ include_recipe "rs_ebs::default"
 
 rs_ebs_attach_volume "Attach the specified EBS volume" do
   volume_name node[:rs_ebs][:volume_name]
+  lineage node[:rs_ebs][:lineage]
   aws_access_key_id node[:aws][:access_key_id]
   aws_secret_access_key node[:aws][:secret_access_key]
   rs_email node[:rs_ebs][:rs_email]
