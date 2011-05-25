@@ -13,7 +13,7 @@
 
 begin
   require 'rest_connection'
-rescue
+rescue LoadError
   Chef::Log.warn("The rest_connection ruby gem is not available, try running utils::install_rest_connection_gem..")
 end
 
