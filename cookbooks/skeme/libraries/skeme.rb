@@ -87,14 +87,17 @@ module Rgeyer
       def tag_instance(action)
         adding = action == "add"
 
+        if adding
+          ::Chef::Log.info("Skeme is tagging this instance with the tag (#{tag})")
+        else
+          ::Chef::Log.info("Skeme is removing the tag (#{tag}) from this instance")
+        end
+
         rs_cli = adding ? "rs_tag -a #{rs_tag}" : "rs_tag -r #{rs_tag}"
         if right_link_tag_exists?
+          tag_action = adding ? :publish : :remove
           right_link_tag rs_tag do
-            if adding
-              action :publish
-            else
-              action :remove
-            end
+            action tag_action
           end
         elsif `which rs_tag`
           `#{rs_cli}`
