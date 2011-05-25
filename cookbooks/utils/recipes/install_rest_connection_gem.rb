@@ -37,7 +37,7 @@ if node[:platform] != "windows"
   g.run_action(:install)
 
   Gem.clear_paths
-  require gem_name
+  require "rest_connection"
 end
 
 # If credentials were provided, create the settings/credentials file
