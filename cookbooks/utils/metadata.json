@@ -7,7 +7,7 @@
   "maintainer_email": "me@ryangeyer.com",
   "attributes": {
     "utils/rest_user": {
-      "required": "required",
+      "required": "optional",
       "calculated": false,
       "choice": [
 
@@ -20,7 +20,7 @@
       "description": "The email address used to log into the RightScale dashboard, and the REST API"
     },
     "utils/rest_pass": {
-      "required": "required",
+      "required": "optional",
       "calculated": false,
       "choice": [
 
@@ -33,7 +33,7 @@
       "description": "The password used to log into the RightScale dashboard, and the REST API"
     },
     "utils/rest_acct_num": {
-      "required": "required",
+      "required": "optional",
       "calculated": false,
       "choice": [
 

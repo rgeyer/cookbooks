@@ -16,16 +16,16 @@ attribute "utils/rest_pass",
   :display_name => "REST API Password",
   :description => "The password used to log into the RightScale dashboard, and the REST API",
   :recipes => ["utils::install_rest_connection_gem"],
-  :required => true
+  :required => "optional"
 
 attribute "utils/rest_user",
   :display_name => "REST API Username",
   :description => "The email address used to log into the RightScale dashboard, and the REST API",
   :recipes => ["utils::install_rest_connection_gem"],
-  :required => true
+  :required => "optional"
 
 attribute "utils/rest_acct_num",
   :display_name => "RightScale Account Number",
   :description => "Your RightScale account number",
   :recipes => ["utils::install_rest_connection_gem"],
-  :required => true
+  :required => "optional"
