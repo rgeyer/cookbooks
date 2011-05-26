@@ -14,9 +14,9 @@
 include Rgeyer::Chef::Skeme
 
 action :add do
-  tag_instance("add")
+  tag_snapshot("add")
 end
 
 action :delete do
-  tag_instance("delete")
+  tag_snapshot("delete")
 end

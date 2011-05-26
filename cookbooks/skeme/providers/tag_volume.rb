@@ -11,11 +11,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-include Opscode::Aws::Ec2
 include Rgeyer::Chef::Skeme
-
-require 'socket'
-require 'yaml'
 
 action :add do
   tag_volume("add")

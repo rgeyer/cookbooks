@@ -16,7 +16,6 @@ actions [:add, :delete]
 attribute :tag, :kind_of => [String], :required => true, :name_attribute => true
 attribute :ec2_tag, :kind_of => [String]
 attribute :rs_tag, :kind_of => [String]
-attribute :chef_tag, :kind_of => [String]
 
 attribute :aws_access_key, :kind_of => [String]
 attribute :aws_secret_access_key, :kind_of => [String]

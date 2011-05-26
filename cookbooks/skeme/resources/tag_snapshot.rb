@@ -11,12 +11,18 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-include Rgeyer::Chef::Skeme
+actions [:add, :delete]
 
-action :add do
-  tag_instance("add")
-end
+attribute :tag, :kind_of => [String], :required => true, :name_attribute => true
+attribute :ec2_tag, :kind_of => [String]
+attribute :rs_tag, :kind_of => [String]
 
-action :delete do
-  tag_instance("delete")
-end
+attribute :snapshot_id, :kind_of => [String], :required => true
+
+# Either AWS or RS credentials are required in order to tag a snapshot
+attribute :aws_access_key, :kind_of => [String]
+attribute :aws_secret_access_key, :kind_of => [String]
+
+attribute :rs_email, :kind_of => [String]
+attribute :rs_pass, :kind_of => [String]
+attribute :rs_acct_num, :kind_of => [String]
