@@ -130,7 +130,7 @@ module Rgeyer
       def query_instance_id
         instance_id = open('http://169.254.169.254/latest/meta-data/instance-id'){|f| f.gets}
         raise "Cannot find instance id!" unless instance_id
-        Chef::Log.debug("Instance ID is #{instance_id}")
+        ::Chef::Log.debug("Instance ID is #{instance_id}")
         instance_id
       end
     end
