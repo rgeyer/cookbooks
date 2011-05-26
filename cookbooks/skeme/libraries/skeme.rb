@@ -23,7 +23,7 @@ module Rgeyer
 
       def skeme_gem
         @@skeme_gem ||= ::Skeme::Skeme.new({
-          :aws_access_key => new_resource.aws_access_key_id,
+          :aws_access_key_id => new_resource.aws_access_key,
           :aws_secret_access_key => new_resource.aws_secret_access_key,
           :rs_email => new_resource.rs_email,
           :rs_pass => new_resource.rs_pass,
