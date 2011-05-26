@@ -5,6 +5,8 @@ description      "Installs/Configures skeme"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
 version          "0.0.4"
 
+recipe "skeme::default", "Installs the skeme gem"
+
 provides "skeme_tag[add]"
 provides "skeme_tag[delete]"
 

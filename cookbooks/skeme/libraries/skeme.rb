@@ -11,6 +11,12 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+begin
+  require 'skeme'
+rescue LoadError
+  Chef::Log.warn("Skeme gem is not installed.  Please run skeme::default and try again.")
+end
+
 module Rgeyer
   module Chef
     module Skeme

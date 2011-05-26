@@ -16,6 +16,7 @@
   "recommendations": {
   },
   "recipes": {
+    "skeme::default": "Installs the skeme gem"
   },
   "groupings": {
   },
