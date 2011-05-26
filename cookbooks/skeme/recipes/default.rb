@@ -21,14 +21,14 @@ require 'socket'
 
 # Install rest_connection in the RightScale sandbox, if it exists.
 if ::File.directory? node[:rs_sandbox][:home]
-  load_ruby_gem_into_rs_sandbox("skeme", "0.0.2", nil, true)
+  load_ruby_gem_into_rs_sandbox("skeme", "0.0.3", nil, true)
 end
 
 # Install rest_connection for the system, if we're on linux
 # TODO: This currently only supports *nix OS's because there is no "system" ruby for windows.
 if node[:platform] != "windows"
   g = gem_package "skeme" do
-    version "0.0.2"
+    version "0.0.3"
     action :nothing
   end
 
