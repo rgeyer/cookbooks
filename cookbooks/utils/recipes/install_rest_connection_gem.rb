@@ -16,6 +16,7 @@
 #  limitations under the License.
 
 include_recipe "rs_sandbox::default"
+include_recipe "skeme::default"
 
 require 'socket'
 rest_connection_version="0.0.15"

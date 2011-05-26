@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "rjg_aws": ">= 0.0.0"
+    "rjg_aws": ">= 0.0.0",
+    "skeme": ">= 0.0.0"
   },
   "name": "rs_ebs",
   "maintainer_email": "me@ryangeyer.com",

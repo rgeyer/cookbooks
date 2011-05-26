@@ -45,6 +45,7 @@ define :rs_ebs_attach_volume,
   volname = params[:volume_name] || "#{instance_id}_#{device}"
 
   include_recipe "rs_ebs::default"
+  include_recipe "skeme::default"
 
   # Capture the "before" list of drives and volumes in windows, so we can wait for the new drive to be added,
   # and know which volume to assign the drive letter to
