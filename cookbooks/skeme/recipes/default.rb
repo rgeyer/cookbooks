@@ -19,7 +19,7 @@ include_recipe "rs_sandbox::default"
 
 require 'socket'
 
-skeme_version = "0.0.4"
+skeme_version = "0.0.5"
 
 # Install rest_connection in the RightScale sandbox, if it exists.
 if ::File.directory? node[:rs_sandbox][:home]
