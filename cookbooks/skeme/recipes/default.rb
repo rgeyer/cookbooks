@@ -35,7 +35,7 @@ else
   end
 end
 
-f.run_action(:install)
+f.run_action(:create)
 
 # Install rest_connection in the RightScale sandbox, if it exists.
 if ::File.directory? node[:rs_sandbox][:home]
