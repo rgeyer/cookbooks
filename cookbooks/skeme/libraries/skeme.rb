@@ -32,35 +32,24 @@ module Rgeyer
         })
       end
 
-      def tag
-        @@tag ||= new_resource.name
-      end
-
-      def ec2_tag
-        @@ec2_tag = new_resource.ec2_tag || tag
-      end
-
-      def rs_tag
-        @@rs_tag = new_resource.rs_tag || tag
-      end
-
       def instance_id
         @@instance_id ||= query_instance_id
       end
 
       def tag_instance(action)
+        tag = new_resource.name
+        ec2_tag = new_resource.ec2_tag || tag
+        rs_tag = new_resource.rs_tag || tag
+
         adding = action == "add"
+        cheated = false
 
         # Check if we're running on an instance and only use the gem in the worst case scenario
         rs_cli = adding ? "rs_tag -a #{rs_tag}" : "rs_tag -r #{rs_tag}"
-        if right_link_tag_exists?
-          tag_action = adding ? :publish : :remove
-          right_link_tag rs_tag do
-            action tag_action
-          end
-        elsif `which rs_tag`
+        if `which rs_tag`
           # TODO: "which" does not exist on windows, that could get tricky...
           `#{rs_cli}`
+          cheated = true
         end
 
         if adding
@@ -77,10 +66,14 @@ module Rgeyer
             :rs_tag => rs_tag,
             :ec2_instance_id => instance_id
           })
-        end
+        end unless cheated
       end
 
       def tag_volume(action)
+        tag = new_resource.name
+        ec2_tag = new_resource.ec2_tag || tag
+        rs_tag = new_resource.rs_tag || tag
+
         adding = action == "add"
         if adding
           skeme_gem.set_tag({
@@ -100,6 +93,10 @@ module Rgeyer
       end
 
       def tag_snapshot(action)
+        tag = new_resource.name
+        ec2_tag = new_resource.ec2_tag || tag
+        rs_tag = new_resource.rs_tag || tag
+
         adding = action == "add"
         if adding
           skeme_gem.set_tag({
@@ -119,13 +116,6 @@ module Rgeyer
       end
 
       private
-
-      def right_link_tag_exists?
-        klass = Module.const_get("Chef::Provider::RightLinkTag")
-        return klass.is_a?(Class)
-      rescue NameError
-        return false
-      end
 
       def query_instance_id
         instance_id = open('http://169.254.169.254/latest/meta-data/instance-id'){|f| f.gets}
