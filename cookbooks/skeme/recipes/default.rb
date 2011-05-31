@@ -39,7 +39,7 @@ f.run_action(:create)
 
 # Install rest_connection in the RightScale sandbox, if it exists.
 if ::File.directory? node[:rs_sandbox][:home]
-  load_ruby_gem_into_rs_sandbox(gemfile, skeme_version, nil, true)
+  load_ruby_gem_into_rs_sandbox(gemfile, skeme_version, nil, false)
 end
 
 # Install rest_connection for the system, if we're on linux
@@ -51,7 +51,7 @@ if node[:platform] != "windows"
   end
 
   g.run_action(:install)
-
-  Gem.clear_paths
-  require "skeme"
 end
+
+Gem.clear_paths
+require "skeme"
