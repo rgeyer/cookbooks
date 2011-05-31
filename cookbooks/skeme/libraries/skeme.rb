@@ -28,7 +28,7 @@ module Rgeyer
           :rs_email => new_resource.rs_email,
           :rs_pass => new_resource.rs_pass,
           :rs_acct_num => new_resource.rs_acct_num,
-          :logger => ::Chef::Log.new
+          :logger => ::Chef::Log
         })
       end
 
