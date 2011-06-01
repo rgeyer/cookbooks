@@ -11,6 +11,12 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+begin
+  require 'ebs_conductor'
+rescue LoadError
+  Chef::Log.warn("ebs_conductor gem not installed, try running the ebs_conductor::default recipe to install it.")
+end
+
 module Rgeyer
   module Chef
     module EbsConductor
