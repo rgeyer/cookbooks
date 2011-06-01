@@ -66,7 +66,7 @@ module Rgeyer
             :rs_tag => rs_tag,
             :ec2_instance_id => instance_id
           })
-        end unless cheated
+        end #unless cheated
       end
 
       def tag_volume(action)
