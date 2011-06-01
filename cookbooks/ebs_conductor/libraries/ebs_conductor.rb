@@ -21,7 +21,7 @@ module Rgeyer
   module Chef
     module EbsConductor
       def ebs_conductor
-        @@ebs_conductor ||= ::EbsConductor::EbsConductor.new(new_resource.aws_access_key_id, new_resource.aws_secret_access_key,
+        @@ebs_conductor ||= Rgeyer::Gem::EbsConductor.new(new_resource.aws_access_key_id, new_resource.aws_secret_access_key,
           {
             :rs_email => new_resource.rs_email,
             :rs_pass => new_resource.rs_pass,
