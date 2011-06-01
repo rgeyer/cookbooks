@@ -35,7 +35,7 @@ define :ebs_conductor_attach_lineage,
   instance_id = node[:ec2][:instance_id]
 
   current_volumes = fog.volumes.all('attachment.instance-id' => instance_id)
-  attached_volumes_in_lineage = current_volumes.select {|vol| vol.tags.keys.include? ebs_conductor.lineage_tag(params[:lineage])}
+  attached_volumes_in_lineage = current_volumes.select {|vol| vol.tags.keys.include? "ebs_conductor:lineage=#{params[:lineage]}"}
   # TODO: This will have to change, and get smarter when/if we support striping
   # Could also be checking a node attribute rather than making an API call, but the API call is far more reliable, particularly since
   # a failed converge could leave the node attribute dirty and missing a record of an already attached volume/lineage
