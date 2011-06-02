@@ -16,13 +16,13 @@ default[:ebs_conductor][:aio_snapshot_recipes_after] = []
 
 if node[:platform] == "windows"
   device_list_ary = []
-  ("b".."p").each do |letter|
+  ("f".."p").each do |letter|
     device_list_ary << "xvd#{letter}"
   end
   default[:ebs_conductor][:valid_ebs_devices] = device_list_ary
 else
   device_list_ary = []
-  ("a".."p").each do |letter|
+  ("b".."p").each do |letter|
     (1..15).each do |number|
       device_list_ary << "/dev/sd#{letter}#{number}"
     end
