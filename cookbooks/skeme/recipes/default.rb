@@ -18,6 +18,7 @@
 include_recipe "rs_sandbox::default"
 
 gemfile="/tmp/skeme.gem"
+gemfile=::File.join(ENV['TMP'], "skeme.gem") if node[:platform] == "windows"
 
 require 'socket'
 
