@@ -16,11 +16,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# TODO: This installs the gem each time the recipe is run, which is expensive.  Need to make this a bit more
-# indempotent
-
-require 'socket'
-
 include_recipe "rs_sandbox::default"
 gemfile="/tmp/ebs_conductor.gem"
 ebs_conductor_version = "0.0.0"
@@ -29,34 +24,38 @@ if node[:platform] == "ubuntu"
   package "xfsprogs"
 end
 
-if Gem::Version.new(Chef::VERSION) >= Gem::Version.new('0.9.0')
-  f = cookbook_file gemfile do
-    source "ebs_conductor-#{ebs_conductor_version}.gem"
-    action :nothing
-  end
-else
-  f = remote_file gemfile do
-    source "ebs_conductor-#{ebs_conductor_version}.gem"
-    action :nothing
-  end
-end
-
-f.run_action(:create)
-
-# Install rest_connection in the RightScale sandbox, if it exists.
-if ::File.directory? node[:rs_sandbox][:home]
-  load_ruby_gem_into_rs_sandbox(gemfile, ebs_conductor_version, nil, false)
-end
-
-# Install rest_connection for the system, if we're on linux
-# TODO: This currently only supports *nix OS's because there is no "system" ruby for windows.
-if node[:platform] != "windows"
-  g = gem_package gemfile do
-    version ebs_conductor_version
-    action :nothing
+unless node[:ebs_conductor_installed]
+  if Gem::Version.new(Chef::VERSION) >= Gem::Version.new('0.9.0')
+    f = cookbook_file gemfile do
+      source "ebs_conductor-#{ebs_conductor_version}.gem"
+      action :nothing
+    end
+  else
+    f = remote_file gemfile do
+      source "ebs_conductor-#{ebs_conductor_version}.gem"
+      action :nothing
+    end
   end
 
-  g.run_action(:install)
+  f.run_action(:create)
+
+  # Install ebs_conductor in the RightScale sandbox, if it exists.
+  if ::File.directory? node[:rs_sandbox][:home]
+    load_ruby_gem_into_rs_sandbox(gemfile, ebs_conductor_version, nil, false)
+  end
+
+  # Install rest_connection for the system, if we're on linux
+  # TODO: This currently only supports *nix OS's because there is no "system" ruby for windows.
+  if node[:platform] != "windows"
+    g = gem_package gemfile do
+      version ebs_conductor_version
+      action :nothing
+    end
+
+    g.run_action(:install)
+  end
+
+  node[:ebs_conductor_installed] = true
 end
 
 Gem.clear_paths
