@@ -153,12 +153,12 @@ if($device_ids.count)
       $drivenumber = $drive.DeviceID -replace '[\\\\\.\\physicaldrive]',''
       $script = @"
 select disk $drivenumber
-clean noerr
+clean
 online disk noerr
 attributes disk clear readonly noerr
 create partition primary noerr
-format quick
 assign letter $letter noerr
+format quick
 "@
 
       Write-Output "Running diskpart with the following script"
