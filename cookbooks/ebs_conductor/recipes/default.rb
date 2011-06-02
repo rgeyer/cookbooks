@@ -16,6 +16,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# TODO: This installs the gem each time the recipe is run, which is expensive.  Need to make this a bit more
+# indempotent
+
 require 'socket'
 
 include_recipe "rs_sandbox::default"
