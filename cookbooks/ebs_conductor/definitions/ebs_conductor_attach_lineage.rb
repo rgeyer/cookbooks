@@ -96,32 +96,8 @@ Set-ChefNode ebs_conductor_win32_volumes -ArrayValue $volume_ids
     end
 
     if node[:platform] == "windows"
-      # TODO: This is a total hack, but if I don't do it, mounting later fails when I'm attaching
-      # a new volume from a snapshot.  Probably a symptom of another problem but this seems to fix it.
-      powershell "Wait for #{device}" do
-        parameters({'TIMEOUT' => params[:timeout]})
-        ps_code = <<-EOF
-$drive_list = Get-ChefNode ebs_conductor_win32_disks
-$start_ts = [DateTime]::Now
-do
-{
-  Start-Sleep -s 2
-  $drives = Get-WMIObject Win32_DiskDrive
-}
-while (($drive_list.count -eq $drives.count) -and (([DateTime]::Now - $start_ts) -lt $env:TIMEOUT))
-if(([DateTime]::Now - $start_ts) -gt $env:TIMEOUT)
-{
-  Write-Error "Timeout of $env:TIMEOUT seconds reached while waiting for volume attachment"
-}
-        EOF
-
-        #source(ps_code)
-      end
-
       powershell "Online, initialize, and format the drive" do
         parameters({"MOUNTPOINT" => params[:mountpoint]})
-        # TODO: Don't format the drive if it's already formatted, as in the
-        # case of attaching a snapshot
         ps_code = <<'EOF'
 $drive_list = Get-ChefNode ebs_conductor_win32_disks
 $volume_list = Get-ChefNode ebs_conductor_win32_volumes
@@ -177,6 +153,7 @@ if($device_ids.count)
       $drivenumber = $drive.DeviceID -replace '[\\\\\.\\physicaldrive]',''
       $script = @"
 select disk $drivenumber
+clean noerr
 online disk noerr
 attributes disk clear readonly noerr
 create partition primary noerr
@@ -201,20 +178,6 @@ EOF
         source(ps_code)
       end
     else
-      # TODO: This is a total hack, but if I don't do it, mounting later fails when I'm attaching
-      # a new volume from a snapshot.  Probably a symptom of another problem but this seems to fix it.
-  #    ruby_block "Wait for #{device}" do
-  #      block do
-  #        start_ts = Time.now.to_i
-  #        while !::File.exist?('/dev/sdi') && (Time.now.to_i - start_ts) < params[:timeout] do
-  #          sleep(2)
-  #        end
-  #        if (Time.now.to_i - start_ts) > params[:timeout]
-  #          raise "Timeout of #{params[:timeout]} seconds reached while waiting for volume attachment"
-  #        end
-  #      end
-  #    end
-
       bash "Format #{device} with XFS" do
         user "root"
         code <<-EOF
