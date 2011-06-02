@@ -62,4 +62,17 @@ define :ebs_conductor_snapshot_lineage,
     include_recipe recipe_name
   end
 
+  ruby_block "Check for snapshot error" do
+    block do
+      if node[:ebs_conductor_snapshot_error]
+        message = <<-EOF
+ebs_conductor failed to create a snapshot. Execution continued so that services and volumes could be unfrozen, but no snapshot was created.  The error was as follows.
+
+#{node[:ebs_conductor_snapshot_error]}
+EOF
+        raise message
+      end
+    end
+  end
+
 end

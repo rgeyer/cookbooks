@@ -26,10 +26,10 @@ action :snapshot do
   options = {}
   options[:timeout] = new_resource.timeout if new_resource.timeout
   options[:history_to_keep] = new_resource.history_to_keep if new_resource.history_to_keep
+  node[:ebs_conductor_snapshot_error] = nil
   begin
     ebs_conductor.snapshot_lineage(new_resource.lineage, options)
   rescue Object => o
-    ::Chef::Log.error("ebs_conductor failed to create a snapshot. Execution will continue so that services and volumes can be unfrozen, but no snapshot was created.  The error was as follows.")
-    ::Chef::Log.error(o)
+    node[:ebs_conductor_snapshot_error] = o
   end
 end
