@@ -40,7 +40,7 @@ define :ebs_conductor_snapshot_lineage,
 
   ebs_conductor_volume params[:lineage] do
     lineage params[:lineage]
-    aws_access_key params[:aws_access_key_id]
+    aws_access_key_id params[:aws_access_key_id]
     aws_secret_access_key params[:aws_secret_access_key]
     rs_email params[:rs_email]
     rs_pass params[:rs_pass]
