@@ -34,8 +34,12 @@ define :ebs_conductor_attach_lineage,
   fog = Fog::Compute.new({:region => region, :provider => 'AWS', :aws_access_key_id => params[:aws_access_key_id], :aws_secret_access_key => params[:aws_secret_access_key]})
   instance_id = node[:ec2][:instance_id]
 
+  ::Chef::Log.info("Region - #{region}, fog - #{fog}, instance_id - #{instance_id}")
+
   current_volumes = fog.volumes.all('attachment.instance-id' => instance_id)
   attached_volumes_in_lineage = current_volumes.select {|vol| vol.tags.keys.include? "ebs_conductor:lineage=#{params[:lineage]}"}
+
+  ::Chef::Log.info("attachedvols - #{attached_volumes_in_lineage}, attachedvols count - #{attached_volumes_in_lineage.count}")
   # TODO: This will have to change, and get smarter when/if we support striping
   # Could also be checking a node attribute rather than making an API call, but the API call is far more reliable, particularly since
   # a failed converge could leave the node attribute dirty and missing a record of an already attached volume/lineage
@@ -76,8 +80,15 @@ foreach($volume in $volumes)
   $volume_ids += $volume.DeviceID
 }
 Set-ChefNode ebs_conductor_win32_volumes -ArrayValue $volume_ids
+exit 0
         EOF
         source(ps_code)
+      end
+    end
+
+    ruby_block "Debugz" do
+      block do
+        ::Chef::Log.info("Made it past execution of the first PS")
       end
     end
 
