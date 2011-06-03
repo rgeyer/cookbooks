@@ -19,7 +19,7 @@
 include_recipe "rs_sandbox::default"
 gemfile="/tmp/ebs_conductor.gem"
 gemfile=::File.join(ENV['TMP'], "ebs_conductor.gem") if node[:platform] == "windows"
-ebs_conductor_version = "0.0.0"
+ebs_conductor_version = "0.0.1"
 
 if node[:platform] == "ubuntu"
   package "xfsprogs"
