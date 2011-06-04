@@ -17,9 +17,11 @@ action :attach do
   options = {}
   options[:timeout] = new_resource.timeout if new_resource.timeout
   options[:snapshot_id] = new_resource.snapshot_id if new_resource.snapshot_id
+  ::Chef::Log.info("options was #{options}, about to call the gem")
   ebs_conductor.attach_from_lineage(
     node[:ec2][:instance_id], new_resource.lineage, new_resource.size, new_resource.device, options
   )
+  ::Chef::Log.info("Gem called yo")
 end
 
 action :snapshot do
