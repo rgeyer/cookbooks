@@ -22,7 +22,7 @@ gemfile=::File.join(ENV['TMP'], "skeme.gem") if node[:platform] == "windows"
 
 require 'socket'
 
-skeme_version = "0.0.5"
+skeme_version = "0.0.6"
 
 if Gem::Version.new(Chef::VERSION) >= Gem::Version.new('0.9.0')
   f = cookbook_file gemfile do
