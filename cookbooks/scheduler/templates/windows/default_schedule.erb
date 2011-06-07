@@ -1,1 +1,1 @@
-for /f %%script IN ('dir <%= node[:scheduler][:script_dir] %>\<%= @frequency %> *.bat') DO call %%script
+for /f %%a IN ('dir /b <%= node[:scheduler][:script_dir] %>\<%= @frequency %>\*.bat') DO call <%= node[:scheduler][:script_dir] %>\<%= @frequency %>\%%a
