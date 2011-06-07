@@ -29,6 +29,6 @@ ebs_conductor_snapshot_lineage "Snapshot AIO lineage #{node[:ebs_conductor][:aio
   recipes_before node[:ebs_conductor][:aio_snapshot_recipes_before]
   recipes_after node[:ebs_conductor][:aio_snapshot_recipes_after]
   if node[:ebs_conductor][:aio_history_to_keep]
-    history_to_keep node[:ebs_conductor][:aio_history_to_keep]
+    history_to_keep node[:ebs_conductor][:aio_history_to_keep].to_i
   end
 end
