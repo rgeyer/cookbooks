@@ -97,7 +97,7 @@ Set-ChefNode ebs_conductor_win32_volumes -ArrayValue $volume_ids
 
     if node[:platform] == "windows"
       powershell "Online, initialize, and format the drive" do
-        parameters({"MOUNTPOINT" => params[:mountpoint], "WIN2K3" => node[:platform_version].start_with? "5.2"})
+        parameters({"MOUNTPOINT" => params[:mountpoint], "WIN2K3" => (node[:platform_version].start_with? "5.2")})
         ps_code = <<'EOF'
 $drive_list = Get-ChefNode ebs_conductor_win32_disks
 $volume_list = Get-ChefNode ebs_conductor_win32_volumes
