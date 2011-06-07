@@ -76,7 +76,7 @@ end
       source_path(::File.join(node[:scheduler][:powershell_libs_dir], "win32_task_create.ps1"))
     end
   else
-    daily_time_parts = node[:scheduler][:daily_time]
+    daily_time_parts = node[:scheduler][:daily_time].split(':')
     hour = daily_time_parts[0]
     minute = daily_time_parts[1]
 
