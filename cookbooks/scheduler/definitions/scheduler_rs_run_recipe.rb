@@ -42,6 +42,7 @@ define :scheduler_rs_run_recipe, :json_file => nil, :frequency => 'daily', :acti
     source "schedule_rs_run_recipe.erb"
     backup false
     mode "0755"
+    variables(:params => {"recipes" => recipe_list})
     action :create
   end
 end
