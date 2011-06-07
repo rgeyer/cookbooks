@@ -53,6 +53,7 @@ end
 
   template script_path do
     source "default_schedule.erb"
+    backup false
     variables(:frequency => frequency)
   end
 

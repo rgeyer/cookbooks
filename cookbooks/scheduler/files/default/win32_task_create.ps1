@@ -28,6 +28,8 @@ $command = $env:COMMAND
 $dailyTime = $env:DAILY_TIME
 $hourlyFrequency = $env:HOURLY_FREQUENCY
 
+Write-Output "Username => $username, Password => $password, Command => $command, Daily Time => $dailyTime, Hourly Freq => $hourlyFrequency"
+
 # "Stop" or "Continue" the powershell script execution when a command fails
 $ErrorActionPreference = "Stop"
 
