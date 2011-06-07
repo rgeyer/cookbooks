@@ -54,6 +54,7 @@ end
   template script_path do
     source "default_schedule.erb"
     backup false
+    mode "0755"
     variables(:frequency => frequency)
   end
 

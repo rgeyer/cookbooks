@@ -40,6 +40,7 @@ define :scheduler_rs_run_recipe, :json_file => nil, :frequency => 'daily', :acti
   template ::File.join(node[:scheduler][:script_dir], params[:frequency], "rs_run_recipe#{node[:scheduler][:script_ext]}") do
     source "schedule_rs_run_recipe.erb"
     backup false
+    mode "0755"
     action :create
   end
 end

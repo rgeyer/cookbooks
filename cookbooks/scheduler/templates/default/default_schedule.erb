@@ -1,1 +1,5 @@
-for script in `ls <%= @frequency %>/*.sh` do $script done
+#!/bin/sh
+for i in `ls <%= node[:scheduler][:script_dir] %>/<%= @frequency %>/*.sh`
+do
+  $i
+done
