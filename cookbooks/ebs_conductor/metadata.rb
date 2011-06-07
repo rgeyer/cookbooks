@@ -53,6 +53,12 @@ attribute "ebs_conductor/aio_mountpoint",
   :recipes => ["ebs_conductor::aio_lineage","ebs_conductor::aio_lineage_snapshot"],
   :required => "required"
 
+attribute "ebs_conductor/aio_history_to_keep",
+  :display_name => "EBS Conductor AIO History to Keep",
+  :description => "The number of snapshots to be kept for the lineage.  Old snapshots in excess of aio_history_to_keep will be deleted.  If left blank snapshots will never be deleted.",
+  :recipes => ["ebs_conductor::aio_lineage_snapshot"],
+  :required => "optional"
+
 attribute "ebs_conductor/rs_email",
   :display_name => "RightScale Account Email",
   :description => "The email address of a RightScale user who has permissions to tag instances, volumes, and snapshots",

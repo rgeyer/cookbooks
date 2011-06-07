@@ -21,7 +21,8 @@ define :ebs_conductor_snapshot_lineage,
     :timeout => nil,
     :mountpoint => nil,
     :recipes_before => [],
-    :recipes_after => [] do
+    :recipes_after => [],
+    :history_to_keep => nil do
 
   include_recipe "ebs_conductor::default"
 
@@ -46,6 +47,9 @@ define :ebs_conductor_snapshot_lineage,
     rs_pass params[:rs_pass]
     rs_acct_num params[:rs_acct_num]
     timeout params[:timeout]
+    if params[:history_to_keep]
+      history_to_keep params[:history_to_keep]
+    end
     action [:snapshot]
   end
 
