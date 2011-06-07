@@ -12,6 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+default[:scheduler][:hourly_recipes] = []
+default[:scheduler][:daily_recipes] = []
+default[:scheduler][:weekly_recipes] = []
+default[:scheduler][:monthly_recipes] = []
+
 if node[:platform] == "windows"
   default[:scheduler][:script_dir] = "C:\\scheduler_scripts"
   default[:scheduler][:script_ext] = ".bat"
