@@ -12,11 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-default[:scheduler][:script_ext] = value_for_platform("windows" => {"default" => ".bat"}, "default" => ".sh")
-
 if node[:platform] == "windows"
   default[:scheduler][:script_dir] = "C:\\scheduler_scripts"
+  default[:scheduler][:script_ext] = ".bat"
+
   default[:scheduler][:powershell_libs_dir] = "C:\\powershell_scripts\\scheduler\\"
 else
   default[:scheduler][:script_dir] = "/etc/scheduler_scripts/"
+  default[:scheduler][:script_ext] = ".sh"
 end
