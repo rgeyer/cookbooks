@@ -8,6 +8,8 @@ version          "0.0.1"
 supports "ubuntu"
 supports "windows"
 
+depends "rs_sandbox"
+
 recipe "ebs_conductor::default", "Installs the EBS Conductor gem and any platform specific packages"
 recipe "ebs_conductor::aio_lineage", "Attaches a volume for the specified lineage at the first available device"
 recipe "ebs_conductor::aio_lineage_snapshot", "Snapshots the specified lineage"

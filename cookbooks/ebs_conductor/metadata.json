@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "rs_sandbox": ">= 0.0.0"
   },
   "name": "ebs_conductor",
   "maintainer_email": "me@ryangeyer.com",
