@@ -9,10 +9,13 @@ supports "ubuntu"
 supports "windows"
 
 depends "rs_sandbox"
+depends "scheduler"
 
 recipe "ebs_conductor::default", "Installs the EBS Conductor gem and any platform specific packages"
 recipe "ebs_conductor::aio_lineage", "Attaches a volume for the specified lineage at the first available device"
 recipe "ebs_conductor::aio_lineage_snapshot", "Snapshots the specified lineage"
+recipe "ebs_conductor::aio_lineage_enable_continuous_backup", "Schedules a daily snapshot of the AIO lineage. Requires that scheduler has been configured by running scheduler::default"
+recipe "ebs_conductor::aio_lineage_disable_continuous_backup", "Unschedules the daily snapshot of the AIO lineage. Requires that scheduler has been configured by running scheduler::default"
 
 attribute "aws/access_key_id",
   :display_name => "Access Key Id",
