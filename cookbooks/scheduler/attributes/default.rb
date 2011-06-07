@@ -16,6 +16,7 @@ default[:scheduler][:script_ext] = value_for_platform("windows" => {"default" =>
 
 if node[:platform] == "windows"
   default[:scheduler][:script_dir] = "C:\\scheduler_scripts"
+  default[:scheduler][:powershell_libs_dir] = "C:\\powershell_scripts\\scheduler\\"
 else
   default[:scheduler][:script_dir] = "/etc/scheduler_scripts/"
 end

@@ -5,7 +5,7 @@
   "maintainer_email": "me@ryangeyer.com",
   "attributes": {
     "scheduler/daily_time": {
-      "required": "optional",
+      "required": "required",
       "calculated": false,
       "choice": [
 
@@ -55,7 +55,6 @@
   "long_description": "= DESCRIPTION:\n\n= REQUIREMENTS:\n\n= ATTRIBUTES:\n\n= USAGE:\n\n",
   "version": "0.0.1",
   "recommendations": {
-    "utilities": ">= 0.0.0"
   },
   "recipes": {
     "scheduler::default": "Creates the hourly and daily scheduler jobs based on the inputs"

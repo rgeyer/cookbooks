@@ -21,6 +21,26 @@ if node[:platform] != "windows"
   package value_for_platform("centos" => { "default" => "crontabs" }, "default" => "cron") do
     action :upgrade
   end
+
+else
+  directory node[:scheduler][:powershell_libs_dir] do
+    recursive true
+    action :create
+  end
+
+  if Gem::Version.new(Chef::VERSION) >= Gem::Version.new('0.9.0')
+    %w{win32_task_create.ps1 win32_task_delete.ps1}.each do |lib|
+      cookbook_file ::File.join(node[:scheduler][:powershell_libs_dir], lib) do
+        source lib
+      end
+    end
+  else
+    %w{win32_task_create.ps1 win32_task_delete.ps1}.each do |lib|
+      remote_file ::File.join(node[:scheduler][:powershell_libs_dir], lib) do
+        source lib
+      end
+    end
+  end
 end
 
 %w{hourly daily}.each do |frequency|
@@ -42,13 +62,17 @@ end
       when "daily"  then hour_freq = 24
     end
 
-    utilities_scheduled_tasks "scheduler_#{frequency}_tasks" do
-      username node[:scheduler][:username]
-      password node[:scheduler][:password]
-      command script_path
-      hourly_frequency hour_freq
-      daily_time node[:scheduler][:daily_time]
-      action :create
+    powershell "scheduler_#{frequency}_tasks" do
+      parameters({
+        "NAME" => "scheduler_#{frequency}_tasks",
+        "USERNAME" => node[:scheduler][:username],
+        "PASSWORD" => node[:scheduler][:password],
+        "COMMAND" => script_path,
+        "HOURLY_FREQUENCY" => hour_freq,
+        "DAILY_TIME" => node[:scheduler][:daily_time]
+      })
+
+      source_path(::File.join(node[:scheduler][:powershell_libs_dir], "win32_task_create.ps1"))
     end
   else
     daily_time_parts = node[:scheduler][:daily_time]

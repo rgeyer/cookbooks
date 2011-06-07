@@ -8,10 +8,6 @@ version          "0.0.1"
 supports "ubuntu"
 supports "windows"
 
-# Windows utilities https://github.com/rgeyer/cookbooks_windows
-# This is a soft dependency (recommends) only because we don't need it in linux. It is mandatory for windows
-recommends "utilities"
-
 recipe "scheduler::default", "Creates the hourly and daily scheduler jobs based on the inputs"
 
 attribute "scheduler/username",
@@ -27,4 +23,5 @@ attribute "scheduler/password",
 attribute "scheduler/daily_time",
   :display_name => "Scheduler Daily Time",
   :description => "The time of the day, based on the server's timezone, to run the daily scheduled tasks. Format: hh:mm (e.g., 22:30)",
-  :recipes => ["scheduler::default"]
+  :recipes => ["scheduler::default"],
+  :required => "required"
