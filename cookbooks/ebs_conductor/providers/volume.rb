@@ -17,6 +17,7 @@ action :attach do
   options = {}
   options[:timeout] = new_resource.timeout if new_resource.timeout
   options[:snapshot_id] = new_resource.snapshot_id if new_resource.snapshot_id
+  # TODO: When the timeout occurs and an exception is raised, Chef does not exit gracefully
   ebs_conductor.attach_from_lineage(
     node[:ec2][:instance_id], new_resource.lineage, new_resource.size, new_resource.device, options
   )

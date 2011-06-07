@@ -22,7 +22,7 @@ define :ebs_conductor_attach_lineage,
     :vol_size_in_gb => nil,
     :snapshot_id => nil,
     :mountpoint => nil,
-    :timeout => nil do
+    :timeout => 5*60 do
 
   include_recipe "ebs_conductor::default"
 
