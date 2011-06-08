@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "rs_sandbox": ">= 0.0.0"
   },
   "name": "skeme",
   "maintainer_email": "me@ryangeyer.com",
