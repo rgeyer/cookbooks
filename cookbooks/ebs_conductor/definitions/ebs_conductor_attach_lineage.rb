@@ -30,12 +30,15 @@ define :ebs_conductor_attach_lineage,
   require 'rubygems'
   require 'fog'
 
+  # TODO: I reckon this has to be in a block to allow it to be run multiple times in the boot phase
   region = node[:ec2][:placement_availability_zone].gsub(/[a-z]*$/, '')
   fog = Fog::Compute.new({:region => region, :provider => 'AWS', :aws_access_key_id => params[:aws_access_key_id], :aws_secret_access_key => params[:aws_secret_access_key]})
   instance_id = node[:ec2][:instance_id]
 
   current_volumes = fog.volumes.all('attachment.instance-id' => instance_id)
   attached_volumes_in_lineage = current_volumes.select {|vol| vol.tags.keys.include? "ebs_conductor:lineage=#{params[:lineage]}"}
+  # / TODO: I reckon this has to be in a block to allow it to be run multiple times in the boot phase
+
   # TODO: This will have to change, and get smarter when/if we support striping
   # Could also be checking a node attribute rather than making an API call, but the API call is far more reliable, particularly since
   # a failed converge could leave the node attribute dirty and missing a record of an already attached volume/lineage
