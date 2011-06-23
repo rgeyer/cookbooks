@@ -23,6 +23,7 @@ if node[:platform] == "windows"
 else
   device_list_ary = []
   ("b".."p").each do |letter|
+    device_list_ary << "/dev/sd#{letter}"
     (1..15).each do |number|
       device_list_ary << "/dev/sd#{letter}#{number}"
     end

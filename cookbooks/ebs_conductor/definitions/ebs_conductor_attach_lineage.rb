@@ -26,17 +26,17 @@ define :ebs_conductor_attach_lineage,
 
   include_recipe "ebs_conductor::default"
 
-  # We know that fog is installed as a dependency of ebs_conductor, which is installed by including the default recipe above
-  require 'rubygems'
-  require 'fog'
-
-  # TODO: I reckon this has to be in a block to allow it to be run multiple times in the boot phase
-  region = node[:ec2][:placement_availability_zone].gsub(/[a-z]*$/, '')
-  fog = Fog::Compute.new({:region => region, :provider => 'AWS', :aws_access_key_id => params[:aws_access_key_id], :aws_secret_access_key => params[:aws_secret_access_key]})
-  instance_id = node[:ec2][:instance_id]
-
-  current_volumes = fog.volumes.all('attachment.instance-id' => instance_id)
-  attached_volumes_in_lineage = current_volumes.select {|vol| vol.tags.keys.include? "ebs_conductor:lineage=#{params[:lineage]}"}
+#  # We know that fog is installed as a dependency of ebs_conductor, which is installed by including the default recipe above
+#  require 'rubygems'
+#  require 'fog'
+#
+#  # TODO: I reckon this has to be in a block to allow it to be run multiple times in the boot phase
+#  region = node[:ec2][:placement_availability_zone].gsub(/[a-z]*$/, '')
+#  fog = Fog::Compute.new({:region => region, :provider => 'AWS', :aws_access_key_id => params[:aws_access_key_id], :aws_secret_access_key => params[:aws_secret_access_key]})
+#  instance_id = node[:ec2][:instance_id]
+#
+#  current_volumes = fog.volumes.all('attachment.instance-id' => instance_id)
+  attached_volumes_in_lineage = node[:ebs_conductor][:current_volumes].select {|vol| vol.tags.keys.include? "ebs_conductor:lineage=#{params[:lineage]}"}
   # / TODO: I reckon this has to be in a block to allow it to be run multiple times in the boot phase
 
   # TODO: This will have to change, and get smarter when/if we support striping
@@ -48,9 +48,8 @@ define :ebs_conductor_attach_lineage,
     device = params[:device]
     # If the device was not provided, we try to guess it
     unless device
-      used_devices = current_volumes.collect {|vol| vol.device }
-      available_devices = node[:ebs_conductor][:valid_ebs_devices] - used_devices
-      device = available_devices[0]
+      device = node[:ebs_conductor][:available_devices].pop
+      ::Chef::Log.info("Device this time was #{device}")
     end
 
     # Capture the "before" list of drives and volumes in windows, so we can wait for the new drive to be added,

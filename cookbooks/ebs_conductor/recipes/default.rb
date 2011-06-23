@@ -18,32 +18,17 @@
 
 include_recipe "rs_sandbox::default"
 include_recipe "skeme::default"
-gemfile="/tmp/ebs_conductor.gem"
-gemfile=::File.join(ENV['TMP'], "ebs_conductor.gem") if node[:platform] == "windows"
-ebs_conductor_version = "0.0.2"
+
+ebs_conductor_version = "0.0.3"
 
 if node[:platform] == "ubuntu"
   package "xfsprogs"
 end
 
 unless node[:ebs_conductor_installed]
-  if Gem::Version.new(Chef::VERSION) >= Gem::Version.new('0.9.0')
-    f = cookbook_file gemfile do
-      source "ebs_conductor-#{ebs_conductor_version}.gem"
-      action :nothing
-    end
-  else
-    f = remote_file gemfile do
-      source "ebs_conductor-#{ebs_conductor_version}.gem"
-      action :nothing
-    end
-  end
-
-  f.run_action(:create)
-
   # Install ebs_conductor in the RightScale sandbox, if it exists.
   if ::File.directory? node[:rs_sandbox][:home]
-    load_ruby_gem_into_rs_sandbox(gemfile, ebs_conductor_version, nil, false)
+    load_ruby_gem_into_rs_sandbox("ebs_conductor", ebs_conductor_version, nil, false)
   end
 
   # Install rest_connection for the system, if we're on linux
@@ -62,3 +47,17 @@ end
 
 Gem.clear_paths
 require "ebs_conductor"
+
+# We know that fog is installed as a dependency of ebs_conductor, which is installed by including the default recipe above
+require 'rubygems'
+require 'fog'
+
+# TODO: I reckon this has to be in a block to allow it to be run multiple times in the boot phase
+region = node[:ec2][:placement_availability_zone].gsub(/[a-z]*$/, '')
+fog = Fog::Compute.new({:region => region, :provider => 'AWS', :aws_access_key_id => node[:aws][:access_key_id], :aws_secret_access_key => node[:aws][:secret_access_key]})
+instance_id = node[:ec2][:instance_id]
+
+node[:ebs_conductor][:current_volumes] = fog.volumes.all('attachment.instance-id' => instance_id)
+used_devices = node[:ebs_conductor][:current_volumes].collect {|vol| vol.device }
+node[:ebs_conductor][:available_devices] = node[:ebs_conductor][:valid_ebs_devices] - used_devices
+node[:ebs_conductor][:available_devices].reverse!
