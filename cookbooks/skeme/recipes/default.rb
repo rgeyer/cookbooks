@@ -17,26 +17,10 @@
 
 include_recipe "rs_sandbox::default"
 
-gemfile="/tmp/skeme.gem"
-gemfile=::File.join(ENV['TMP'], "skeme.gem") if node[:platform] == "windows"
-
 require 'socket'
 
-skeme_version = "0.0.6"
-
-if Gem::Version.new(Chef::VERSION) >= Gem::Version.new('0.9.0')
-  f = cookbook_file gemfile do
-    source "skeme-#{skeme_version}.gem"
-    action :nothing
-  end
-else
-  f = remote_file gemfile do
-    source "skeme-#{skeme_version}.gem"
-    action :nothing
-  end
-end
-
-f.run_action(:create)
+gemfile = "skeme"
+skeme_version = "0.0.7"
 
 # Install rest_connection in the RightScale sandbox, if it exists.
 if ::File.directory? node[:rs_sandbox][:home]
