@@ -19,7 +19,7 @@
 include_recipe "rs_sandbox::default"
 include_recipe "skeme::default"
 
-ebs_conductor_version = "0.0.3"
+ebs_conductor_version = "0.0.4"
 
 if node[:platform] == "ubuntu"
   package "xfsprogs"

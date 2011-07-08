@@ -6,3 +6,6 @@
 
 = USAGE:
 
+= To Do List:
+* Auto expand partition to full size of the volume to allow for resizing EBS volumes.
+* Custom exec collectd plugin for checking snapshot age.

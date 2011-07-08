@@ -3,7 +3,7 @@ maintainer_email "me@ryangeyer.com"
 license          IO.read(File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'LICENSE')))
 description      "Installs/Configures ebs_conductor"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
-version          "0.0.2"
+version          "0.0.3"
 
 supports "ubuntu"
 supports "windows"

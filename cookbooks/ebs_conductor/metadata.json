@@ -179,8 +179,8 @@
     "ubuntu": ">= 0.0.0"
   },
   "maintainer": "Ryan J. Geyer",
-  "long_description": "= DESCRIPTION:\n\n= REQUIREMENTS:\n\n= ATTRIBUTES:\n\n= USAGE:\n\n",
-  "version": "0.0.2",
+  "long_description": "= DESCRIPTION:\n\n= REQUIREMENTS:\n\n= ATTRIBUTES:\n\n= USAGE:\n\n= To Do List:\n* Auto expand partition to full size of the volume to allow for resizing EBS volumes.\n* Custom exec collectd plugin for checking snapshot age.",
+  "version": "0.0.3",
   "recommendations": {
   },
   "recipes": {
