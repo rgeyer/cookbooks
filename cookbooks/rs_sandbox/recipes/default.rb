@@ -22,11 +22,16 @@ if node[:platform] == "windows"
   node[:rs_sandbox][:home] = `echo %RS_SANDBOX_HOME%`.strip
   node[:rs_sandbox][:gem_bin] = "#{node[:rs_sandbox][:home]}\\Ruby\\bin\\ruby.exe #{node[:rs_sandbox][:home]}\\Ruby\\bin\\gem"
   node[:rs_sandbox][:rl_user_home_dir] = `echo %USERPROFILE%`.strip
+  
+  gem_source_already_added = `#{node[:rs_sandbox][:gem_bin]} sources --list | #{grep_bin} "http://rubygems.org"`
+  
+  if gem_source_already_added.strip == ""
+    Chef::Log.info("Adding http://rubygems.org to gem source for RightScale sandbox")
+    `#{node[:rs_sandbox][:gem_bin]} sources --add http://rubygems.org/`
+  end
+else
+  template "/root/.gemrc" do
+    source "gemrc.erb"
+  end
 end
 
-gem_source_already_added = `#{node[:rs_sandbox][:gem_bin]} sources --list | #{grep_bin} "http://rubygems.org"`
-
-if gem_source_already_added.strip == ""
-  Chef::Log.info("Adding http://rubygems.org to gem source for RightScale sandbox")
-  `#{node[:rs_sandbox][:gem_bin]} sources --add http://rubygems.org/`
-end
