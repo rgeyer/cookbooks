@@ -30,10 +30,8 @@ if node[:platform] == "windows"
     `#{node[:rs_sandbox][:gem_bin]} sources --add http://rubygems.org/`
   end
 else
-  t = template "/root/.gemrc" do
+  template "/root/.gemrc" do
     source "gemrc.erb"
   end
-  
-  t.run_action(:create)
 end
 
