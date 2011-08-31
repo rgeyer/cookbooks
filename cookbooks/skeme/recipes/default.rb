@@ -22,6 +22,13 @@ require 'socket'
 gemfile = "skeme"
 skeme_version = "0.0.7"
 
+package "libxml-devel" do
+  package_name value_for_platform(
+    [ "centos", "redhat", "suse", "fedora" ] => { "default" => "libxml2-devel" },
+    "default" => 'libxml2-dev'
+  )
+end
+
 # Install rest_connection in the RightScale sandbox, if it exists.
 if ::File.directory? node[:rs_sandbox][:home]
   load_ruby_gem_into_rs_sandbox(gemfile, skeme_version, nil, false)
