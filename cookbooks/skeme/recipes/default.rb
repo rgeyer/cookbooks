@@ -22,15 +22,13 @@ require 'socket'
 gemfile = "skeme"
 skeme_version = "0.0.7"
 
-p = package "libxml-devel" do
-  package_name value_for_platform(
-    [ "centos", "redhat", "suse", "fedora" ] => { "default" => "libxml2-devel" },
-    "default" => 'libxml2-dev'
-  )
-  action :nothing
-end
+node[:skeme][:install_packages].each do |pkg|
+  p = package pkg do
+    action :nothing
+  end
 
-p.run_action(:install)
+  p.run_action(:install)
+end
 
 # Install rest_connection in the RightScale sandbox, if it exists.
 if ::File.directory? node[:rs_sandbox][:home]
