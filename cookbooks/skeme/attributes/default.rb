@@ -11,4 +11,9 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-default[:skeme][:install_packages] = value_for_platform("centos" => { "default" => ["libxml2-devel", "libxslt-devel"] }, "default" => ["libxml2-dev", "libxslt1-dev"])
+case node[:platform]
+  when "centos"
+    default[:skeme][:install_packages] = ["libxml2-devel", "libxslt-devel"]
+  when "ubuntu"
+    default[:skeme][:install_packages] = ["libxml2-dev", "libxslt1-dev"]
+end
