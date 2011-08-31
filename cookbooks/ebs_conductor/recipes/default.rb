@@ -53,11 +53,13 @@ require "ebs_conductor"
 require 'rubygems'
 require 'fog'
 
-region = node[:ec2][:placement_availability_zone].gsub(/[a-z]*$/, '')
-fog = Fog::Compute.new({:region => region, :provider => 'AWS', :aws_access_key_id => node[:aws][:access_key_id], :aws_secret_access_key => node[:aws][:secret_access_key]})
-instance_id = node[:ec2][:instance_id]
+if node[:ec2]
+  region = node[:ec2][:placement_availability_zone].gsub(/[a-z]*$/, '')
+  fog = Fog::Compute.new({:region => region, :provider => 'AWS', :aws_access_key_id => node[:aws][:access_key_id], :aws_secret_access_key => node[:aws][:secret_access_key]})
+  instance_id = node[:ec2][:instance_id]
 
-node[:ebs_conductor][:current_volumes] = fog.volumes.all('attachment.instance-id' => instance_id)
-used_devices = node[:ebs_conductor][:current_volumes].collect {|vol| vol.device }
-node[:ebs_conductor][:available_devices] = node[:ebs_conductor][:valid_ebs_devices] - used_devices
-node[:ebs_conductor][:available_devices].reverse!
+  node[:ebs_conductor][:current_volumes] = fog.volumes.all('attachment.instance-id' => instance_id)
+  used_devices = node[:ebs_conductor][:current_volumes].collect {|vol| vol.device }
+  node[:ebs_conductor][:available_devices] = node[:ebs_conductor][:valid_ebs_devices] - used_devices
+  node[:ebs_conductor][:available_devices].reverse!
+end
