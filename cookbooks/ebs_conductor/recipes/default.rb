@@ -53,7 +53,7 @@ require "ebs_conductor"
 require 'rubygems'
 require 'fog'
 
-if node[:ec2]
+if attribute?(:ec2)
   region = node[:ec2][:placement_availability_zone].gsub(/[a-z]*$/, '')
   fog = Fog::Compute.new({:region => region, :provider => 'AWS', :aws_access_key_id => node[:aws][:access_key_id], :aws_secret_access_key => node[:aws][:secret_access_key]})
   instance_id = node[:ec2][:instance_id]
