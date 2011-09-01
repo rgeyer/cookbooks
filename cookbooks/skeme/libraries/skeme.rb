@@ -118,10 +118,15 @@ module Rgeyer
       private
 
       def query_instance_id
-        instance_id = open('http://169.254.169.254/latest/meta-data/instance-id'){|f| f.gets}
-        raise "Cannot find instance id!" unless instance_id
-        ::Chef::Log.debug("Instance ID is #{instance_id}")
-        instance_id
+        if attribute?(:ec2)
+          instance_id = open('http://169.254.169.254/latest/meta-data/instance-id'){|f| f.gets}
+          raise "Cannot find instance id!" unless instance_id
+          ::Chef::Log.debug("Instance ID is #{instance_id}")
+          instance_id
+        else
+          ::Chef::Log.info("EC2 instance ID queried on a non EC2 instance.")
+          "not-ec2"
+        end
       end
     end
   end
