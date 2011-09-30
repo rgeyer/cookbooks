@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# inspired by https://gist.github.com/867960
+
 require 'json'
 
 if Chef::Config[:solo]
