@@ -1,0 +1,9 @@
+= DESCRIPTION:
+dyn_record is Alpha and not thoroughly tested.
+
+= REQUIREMENTS:
+
+= ATTRIBUTES:
+
+= USAGE:
+
