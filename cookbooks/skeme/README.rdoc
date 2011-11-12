@@ -3,45 +3,50 @@ Skeme is a cloud management tagging library for Opscode Chef.
 
 With one LWRP you can tag your server in RightScale, EC2, and Opscode Chef.
 
+See the change log for the
+
 = REQUIREMENTS:
 In order to set or delete EC2 tags you must supply +aws_access_key+ and +aws_secret_access_key+ to the provider so that
 communication with AWS can be established.
 
-In order to set or delete Opscode Chef tags, you must run the recipe which uses skeme as a chef client in a Chef runtime >= 0.10.0.
-In other words, opscode tags will not get set when executing Skeme from a recipe run in the RightScale dashboard (RightScale uses Chef-Solo 0.8.16 at the time of this writing).
+When the provider is being executed from a RightScale managed instance, no credentials are required.
 
 = ATTRIBUTES:
 
-= USAGE:
+= USAGE
 
-Setting the tag "foo:bar=baz" on all cloud management platforms (RightScale, EC2, Opscode)
-
-  skeme_tag "foo:bar=baz" do
-    aws_access_key "..."
-    aws_secret_access_key "..."
-    action :add
-  end
-
-Setting the tag "foo:bar=baz" for RightScale and EC2, but "opscode:unique=true" on Opscode
+Setting the tag "foo:bar=baz" on all cloud management platforms (RightScale, EC2)
 
   skeme_tag "foo:bar=baz" do
     aws_access_key "..."
     aws_secret_access_key "..."
-    chef_tag "opscode:unique=true"
+    tag_namespace "foo"
+    tag_predicate "bar"
+    tag_value     "baz"
     action :add
   end
 
-Setting unique tags for each cloud management platform
+Setting the tag "foo:bar=baz" for RightScale, but "ec2:unique=true" on EC2
 
-  skeme_tag "This is just decoration now" do
+  skeme_tag "foo:bar=baz" do
+    tag_namespace "foo"
+    tag_predicate "bar"
+    tag_value     "baz"
+    destination   "rightscale"
+    action :add
+  end
+
+  skeme_tag "ec2:unique=true" do
     aws_access_key "..."
     aws_secret_access_key "..."
-    ec2_tag "ec2:unique=true"
-    chef_tag "opscode:unique=true"
-    rs_tag "rs:unique=true"
+    tag_namespace "ec2"
+    tag_predicate "unique"
+    tag_value     "true"
+    destination   "aws"
     action :add
   end
 
+= CHANGELOG
 
 = LICENSE & AUTHOR
 

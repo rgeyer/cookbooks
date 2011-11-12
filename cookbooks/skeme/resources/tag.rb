@@ -13,6 +13,10 @@
 
 actions [:add, :delete]
 
+attribute :tag_namespace, :kind_of => [String], :required => true
+attribute :tag_predicate, :kind_of => [String], :required => true
+attribute :tag_value,     :kind_of => [String], :required => true
+
 attribute :tag, :kind_of => [String], :required => true, :name_attribute => true
 attribute :ec2_tag, :kind_of => [String]
 attribute :rs_tag, :kind_of => [String]
