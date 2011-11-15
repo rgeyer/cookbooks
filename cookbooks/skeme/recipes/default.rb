@@ -20,7 +20,7 @@ include_recipe "rs_sandbox::default"
 require 'socket'
 
 gemfile = "skeme"
-skeme_version = "0.0.7"
+skeme_version = "0.0.9"
 
 node[:skeme][:install_packages].each do |pkg|
   p = package pkg do
