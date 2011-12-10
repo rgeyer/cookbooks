@@ -17,7 +17,6 @@
 # limitations under the License.
 
 if node[:platform] != "windows"
-  # TODO: Verify support for CentOS, maybe I need to install vixie-cron too?
   package value_for_platform("centos" => { "default" => "crontabs" }, "default" => "cron") do
     action :upgrade
   end

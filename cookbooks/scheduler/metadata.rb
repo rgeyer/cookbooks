@@ -5,8 +5,9 @@ description      "Installs/Configures scheduler"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
 version          "0.0.1"
 
-supports "ubuntu"
-supports "windows"
+%w{centos ubuntu windows}.each do |os|
+  supports os
+end
 
 recipe "scheduler::default", "Creates the hourly and daily scheduler jobs based on the inputs"
 
