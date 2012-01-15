@@ -43,13 +43,13 @@ define :ebs_conductor_attach_lineage,
   # Could also be checking a node attribute rather than making an API call, but the API call is far more reliable, particularly since
   # a failed converge could leave the node attribute dirty and missing a record of an already attached volume/lineage
   if attached_volumes_in_lineage.count > 0
-    ::Chef::Log.info("EBS Conductor lineage #{params[:lineage]} already attached to this instance as #{attached_volumes_in_lineage[0].id}")
+    ::Chef::Log.info("ebs_conductor: lineage #{params[:lineage]} already attached to this instance as #{attached_volumes_in_lineage[0].id}")
   else
     device = params[:device]
     # If the device was not provided, we try to guess it
     unless device
       device = node[:ebs_conductor][:available_devices].pop
-      ::Chef::Log.info("Device this time was #{device}")
+      ::Chef::Log.info("ebs_conductor: No device was specified, #{device} was chosen automatically")
     end
 
     # Capture the "before" list of drives and volumes in windows, so we can wait for the new drive to be added,
