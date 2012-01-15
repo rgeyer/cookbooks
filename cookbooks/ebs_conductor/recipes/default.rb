@@ -54,7 +54,11 @@ require 'rubygems'
 require 'fog'
 
 if node.attribute?(:ec2)
-  region = node[:ec2][:placement_availability_zone].gsub(/[a-z]*$/, '')
+  if node[:ec2].attribute?(:placement_availability_zone)
+    region = node[:ec2][:placement_availability_zone].gsub(/[a-z]*$/, '')
+  elsif node[:ec2].attribute?(:placement)
+    region = node[:ec2][:placement][:availability_zone].gsub(/[a-z]*$/, '')
+  end
   fog = Fog::Compute.new({:region => region, :provider => 'AWS', :aws_access_key_id => node[:aws][:access_key_id], :aws_secret_access_key => node[:aws][:secret_access_key]})
   instance_id = node[:ec2][:instance_id]
 
