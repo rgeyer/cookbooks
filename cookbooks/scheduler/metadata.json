@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "rs_utils": ">= 0.0.0"
   },
   "name": "scheduler",
   "maintainer_email": "me@ryangeyer.com",
@@ -12,7 +13,7 @@
       ],
       "type": "string",
       "recipes": [
-        "scheduler::default"
+        "scheduler::setup_scheduler"
       ],
       "display_name": "Scheduler Daily Time",
       "description": "The time of the day, based on the server's timezone, to run the daily scheduled tasks. Format: hh:mm (e.g., 22:30)"
@@ -25,7 +26,7 @@
       ],
       "type": "string",
       "recipes": [
-        "scheduler::default"
+        "scheduler::setup_scheduler"
       ],
       "display_name": "Scheduler Admin Password",
       "description": "The password for the user that will be used to run scheduled tasks in windows only.  This can be excluded on *nix OS's"
@@ -38,7 +39,7 @@
       ],
       "type": "string",
       "recipes": [
-        "scheduler::default"
+        "scheduler::setup_scheduler"
       ],
       "display_name": "Scheduler Admin Username",
       "description": "The username for the user that will be used to run scheduled tasks in windows only.  This can be excluded on *nix OS's"
@@ -54,11 +55,12 @@
   },
   "maintainer": "Ryan J. Geyer",
   "long_description": "= DESCRIPTION:\n\n= REQUIREMENTS:\n\n= ATTRIBUTES:\n\n= USAGE:\n\n",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "recommendations": {
   },
   "recipes": {
-    "scheduler::default": "Creates the hourly and daily scheduler jobs based on the inputs"
+    "scheduler::do_list_jobs": "Lists all scheduled jobs",
+    "scheduler::setup_scheduler": "Creates the hourly and daily scheduler jobs based on the inputs"
   },
   "groupings": {
   },
