@@ -65,6 +65,7 @@ end
 
 # A useful way to find "this" instance when running scripts that use rest_connection
 # Tag.search('ec2_instance', ["ipv4:private=#{IPSocket.getaddress(Socket.gethostname)}"])
-skeme_tag "ipv4:private=#{IPSocket.getaddress(Socket.gethostname)}" do
-  action :add
-end
+#right_link_tag "ipv4:private=#{IPSocket.getaddress(Socket.gethostname)}" do
+#  action :publish
+#end
+# NOTE: This becomes redundant when running rightscale::setup_tags, and skeme_tag should be deprecated
