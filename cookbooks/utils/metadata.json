@@ -16,8 +16,8 @@
       "recipes": [
         "utils::install_rest_connection_gem"
       ],
-      "display_name": "REST API Username",
-      "description": "The email address used to log into the RightScale dashboard, and the REST API"
+      "description": "The email address used to log into the RightScale dashboard, and the REST API",
+      "display_name": "REST API Username"
     },
     "utils/rest_pass": {
       "required": "optional",
@@ -29,8 +29,8 @@
       "recipes": [
         "utils::install_rest_connection_gem"
       ],
-      "display_name": "REST API Password",
-      "description": "The password used to log into the RightScale dashboard, and the REST API"
+      "description": "The password used to log into the RightScale dashboard, and the REST API",
+      "display_name": "REST API Password"
     },
     "utils/rest_acct_num": {
       "required": "optional",
@@ -42,8 +42,8 @@
       "recipes": [
         "utils::install_rest_connection_gem"
       ],
-      "display_name": "RightScale Account Number",
-      "description": "Your RightScale account number"
+      "description": "Your RightScale account number",
+      "display_name": "RightScale Account Number"
     }
   },
   "license": "All rights reserved",

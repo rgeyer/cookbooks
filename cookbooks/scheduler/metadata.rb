@@ -9,7 +9,7 @@ version          "0.0.2"
   supports os
 end
 
-depends "rs_utils"
+depends "rightscale"
 
 recipe "scheduler::setup_scheduler", "Creates the hourly and daily scheduler jobs based on the inputs"
 recipe "scheduler::do_list_jobs", "Lists all scheduled jobs"
