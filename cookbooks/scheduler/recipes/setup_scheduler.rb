@@ -16,7 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-rs_utils_marker :begin
+rightscale_marker :begin
 
 if node[:platform] != "windows"
   package value_for_platform("centos" => { "default" => "crontabs" }, "default" => "cron") do
@@ -94,4 +94,4 @@ end
   end
 end
 
-rs_utils_marker :end
+rightscale_marker :end
