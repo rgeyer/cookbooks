@@ -10,7 +10,6 @@ supports "windows"
 
 depends "rs_sandbox"
 depends "scheduler"
-depends "skeme"
 
 recipe "ebs_conductor::default", "Installs the EBS Conductor gem and any platform specific packages"
 recipe "ebs_conductor::aio_lineage", "Attaches a volume for the specified lineage at the first available device"

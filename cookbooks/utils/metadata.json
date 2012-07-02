@@ -1,7 +1,6 @@
 {
   "dependencies": {
-    "rs_sandbox": ">= 0.0.0",
-    "skeme": ">= 0.0.0"
+    "rs_sandbox": ">= 0.0.0"
   },
   "name": "utils",
   "maintainer_email": "me@ryangeyer.com",

@@ -17,7 +17,6 @@
 # limitations under the License.
 
 include_recipe "rs_sandbox::default"
-include_recipe "skeme::default"
 
 gemfile = "ebs_conductor"
 ebs_conductor_version = "0.0.4"

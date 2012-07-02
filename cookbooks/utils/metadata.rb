@@ -6,7 +6,6 @@ long_description IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
 version          "0.0.1"
 
 depends "rs_sandbox"
-depends "skeme"
 
 provides "rsa_keypair_from_pkcs12(:aws_access_key_id, :aws_secret_access_key, :s3_bucket, :s3_file, :pkcs12_pass, :rsa_cert_path, :rsa_key_path)"
 
