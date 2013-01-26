@@ -15,15 +15,15 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-include_recipe "rs_sandbox::default"
+include_recipe "rightscale_sandbox::default"
 
 require 'socket'
 rest_connection_version="0.0.15"
 
 # Install rest_connection in the RightScale sandbox, if it exists.
-if ::File.directory? node[:rs_sandbox][:home]
-  load_ruby_gem_into_rs_sandbox("i18n", nil, nil, true)
-  load_ruby_gem_into_rs_sandbox("rest_connection", rest_connection_version, nil, false)
+if ::File.directory? node[:rightscale_sandbox][:home]
+  load_ruby_gem_into_rightscale_sandbox("i18n", nil, nil, true)
+  load_ruby_gem_into_rightscale_sandbox("rest_connection", rest_connection_version, nil, false)
 end
 
 # Install rest_connection for the system, if we're on linux
@@ -42,14 +42,14 @@ end
 
 # If credentials were provided, create the settings/credentials file
 if node[:utils] && node[:utils][:rest_pass] && node[:utils][:rest_user] && node[:utils][:rest_acct_num]
-  d = directory value_for_platform("windows" => {"default" => "#{node[:rs_sandbox][:rl_user_home_dir]}/.rest_connection"}, "default" => "/etc/rest_connection") do
+  d = directory value_for_platform("windows" => {"default" => "#{node[:rightscale_sandbox][:rl_user_home_dir]}/.rest_connection"}, "default" => "/etc/rest_connection") do
     recursive true
     action :nothing
   end
 
   d.run_action(:create)
 
-  t = template value_for_platform("windows" => {"default" => "#{node[:rs_sandbox][:rl_user_home_dir]}/.rest_connection/rest_api_config.yaml"}, "default" => "/etc/rest_connection/rest_api_config.yaml") do
+  t = template value_for_platform("windows" => {"default" => "#{node[:rightscale_sandbox][:rl_user_home_dir]}/.rest_connection/rest_api_config.yaml"}, "default" => "/etc/rest_connection/rest_api_config.yaml") do
     source "rest_api_config.yaml.erb"
     variables(
       :rest_pass => node[:utils][:rest_pass],

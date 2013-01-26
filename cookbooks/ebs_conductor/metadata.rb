@@ -2,7 +2,7 @@ maintainer       "Ryan J. Geyer"
 maintainer_email "me@ryangeyer.com"
 license          "Apache 2.0" #IO.read(File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'LICENSE')))
 description      "Installs/Configures ebs_conductor"
-long_description IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
+long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          "0.0.3"
 
 supports "ubuntu"
